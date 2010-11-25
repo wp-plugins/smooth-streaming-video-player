@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SVP Plugin for WordPress\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-24 14:23+0100\n"
+"PO-Revision-Date: 2010-11-24 14:29+0100\n"
+"Last-Translator: Agence Adenova <agence@adenova.fr>\n"
+"Language-Team: Adenova <agence@adenova.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: J:\\work\\LaChaineTechno\\WordPress.Plugin-Codeplex\\wp-content\\plugins\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: svp-silverlight\n"
+
+#: svp-silverlight/svp-about.php:5
+#: svp-silverlight/svp-settings.php:14
+msgid "Cheatin&#8217; uh?"
+msgstr "On essaie de tricher ?"
+
+#: svp-silverlight/svp-about.php:7
+#: svp-silverlight/svp-add.php:7
+#: svp-silverlight/svp-settings.php:16
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Vous ne possédez pas les privilèges suffisants pour accéder à cette page."
+
+#: svp-silverlight/svp-about.php:16
+#: svp-silverlight/svp-silverlight.php:286
+msgid "About"
+msgstr "A propos"
+
+#: svp-silverlight/svp-about.php:17
+#, php-format
+msgid "Le plugin SVP (Smooth Streaming Video Player) a été développé par l'agence <a href='%s'>Adenova</a>."
+msgstr "Le plugin SVP (Smooth Streaming Video Player) a été développé par l'agence <a href='%s'>Adenova</a>."
+
+#: svp-silverlight/svp-about.php:19
+msgid "Il permet la lecture de vidéos encodées en Smooth Streaming avec Silverlight sur un PC ou un Mac et avec le tag HTML 5 &lt;video&gt; sur iPhone et iPad."
+msgstr "Il permet la lecture de vidéos encodées en Smooth Streaming avec Silverlight sur un PC ou un Mac et avec le tag HTML 5 &lt;video&gt; sur iPhone et iPad."
+
+#: svp-silverlight/svp-about.php:20
+msgid "La première version est sortie en juin 2010."
+msgstr "La première version est sortie en juin 2010."
+
+#: svp-silverlight/svp-about.php:21
+#, php-format
+msgid "Vous pouvez consulter <a href='%s'>la page consacrée</a> à ce plugin sur le site d'Adenova."
+msgstr "Vous pouvez consulter <a href='%s'>la page consacrée</a> à ce plugin sur le site d'Adenova."
+
+#: svp-silverlight/svp-about.php:22
+msgid "Ce plugin a été réalisé en collaboration avec le <a href='http://www.microsoft.com/france/apropos/microsoft-technology-center/'>MTC Paris</a> (Microsoft Technology Center Paris) dans le cadre d'un projet d'implémentation d'un player Silverlight de vidéos lues en Smooth Streaming."
+msgstr "Ce plugin a été réalisé en collaboration avec le <a href='http://www.microsoft.com/france/apropos/microsoft-technology-center/'>MTC Paris</a> (Microsoft Technology Center Paris) dans le cadre d'un projet d'implémentation d'un player Silverlight de vidéos lues en Smooth Streaming."
+
+#: svp-silverlight/svp-add.php:21
+#: svp-silverlight/svp-silverlight.php:615
+msgid "Smooth Streaming Movie"
+msgstr "Vidéo Smooth Streaming"
+
+#: svp-silverlight/svp-add.php:32
+msgid "Include a smooth streaming movie in your post content"
+msgstr "Ajouter une vidéo smooth streaming dans le contenu de l'article"
+
+#: svp-silverlight/svp-add.php:34
+#: svp-silverlight/svp-movie-metabox.php:27
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: svp-silverlight/svp-add.php:36
+msgid "After selection of movie, you could specifiy some options."
+msgstr "Après la sélection de la vidéo, vous pourrez spécifier des options."
+
+#: svp-silverlight/svp-add.php:52
+msgid "None smooth movie is actually associated with this post. Click on left list to choose one."
+msgstr "Aucune vidéo smooth streaming n'est actuellement associé à l'article. Cliquez dans la liste de gauche pour en choisir une."
+
+#: svp-silverlight/svp-add.php:53
+msgid "You have associated with this post the named smooth movie : [movie]"
+msgstr "Vous avez associé à l'article la vidéo smooth nommée : [movie]"
+
+#: svp-silverlight/svp-add.php:54
+msgid "You must publish the post before to choose the movie to add."
+msgstr "Vous devez publier l'article avant de choisir la vidéo à ajouter."
+
+#: svp-silverlight/svp-movie-metabox.php:34
+#: svp-silverlight/svp-movie-metabox.php:60
+msgid "None smooth streaming movie is actually associated with this post. Click on left list to choose one."
+msgstr "Aucune vidéo smooth streaming n'est actuellement associé à l'article. Cliquez dans la liste de gauche pour en choisir une."
+
+#: svp-silverlight/svp-movie-metabox.php:35
+#, php-format
+msgid "You have associated with this post the named smooth streaming movie&nbsp;: &laquo;&nbsp;%s&nbsp;&raquo;"
+msgstr "Vous avez associé à l'article la vidéo smooth nommée&nbsp;: &laquo;&nbsp;%s&nbsp;&raquo;"
+
+#: svp-silverlight/svp-movie-metabox.php:38
+msgid "Player dimensions"
+msgstr "Dimensions du lecteur"
+
+#: svp-silverlight/svp-movie-metabox.php:40
+msgid "Width in pixels"
+msgstr "Largeur en pixels"
+
+#: svp-silverlight/svp-movie-metabox.php:41
+msgid "Height in pixels"
+msgstr "Hauteur en pixels"
+
+#: svp-silverlight/svp-movie-metabox.php:43
+msgid "Save"
+msgstr "Enregistrer"
+
+#: svp-silverlight/svp-movie-metabox.php:61
+msgid "You have associated with this post the named smooth streaming movie&nbsp;: [movie]"
+msgstr "Vous avez associé à l'article la vidéo smooth nommée : [movie]"
+
+#: svp-silverlight/svp-movie-metabox.php:62
+msgid "You must publish the post before writing movie datas in database."
+msgstr "Vous devez publier l'article avant l'enregistrement des données de la vidéo en base de données."
+
+#: svp-silverlight/svp-movie-metabox.php:63
+msgid "An error occurred writing movie datas in database or there is not datas to update."
+msgstr "Une erreur a eu lieu lors de l'écriture des données de la vidéo en base de données ou il n'y avait pas de données à mettre à jour."
+
+#: svp-silverlight/svp-movie-metabox.php:64
+msgid "Movie options has been correctly updated."
+msgstr "Les options de la vidéo ont correctement été mises à jour."
+
+#: svp-silverlight/svp-settings.php:42
+msgid "Settings have been correctly updated."
+msgstr "Les options de la vidéo ont correctement été mises à jour."
+
+#: svp-silverlight/svp-settings.php:50
+#: svp-silverlight/svp-silverlight.php:285
+msgid "Settings"
+msgstr "Paramètres"
+
+#: svp-silverlight/svp-settings.php:60
+msgid "Movies source"
+msgstr "Source des vidéos"
+
+#: svp-silverlight/svp-settings.php:64
+msgid "Movies server web address"
+msgstr "Adresse web du serveur de vidéos"
+
+#: svp-silverlight/svp-settings.php:67
+msgid "Example: <code>http://wordpress.org/</code> &#8212; don&#8217;t forget the <code>http://</code>"
+msgstr "Exemple : <code>http://wordpress.org/</code> &#8212; n&#8217;oubliez pas le <code>http://</code>"
+
+#: svp-silverlight/svp-settings.php:71
+msgid "Movies directory name"
+msgstr "Nom du répertoire des vidéos"
+
+#: svp-silverlight/svp-settings.php:74
+msgid "This is the directory name that contains your movies on the server."
+msgstr "Il s'agit du nom du répertoire contenant vos vidéos sur le serveur."
+
+#: svp-silverlight/svp-settings.php:83
+msgid "Default player style"
+msgstr "Style par défaut du lecteur"
+
+#: svp-silverlight/svp-settings.php:87
+msgid "Player width"
+msgstr "Largeur du lecteur"
+
+#: svp-silverlight/svp-settings.php:91
+msgid "Player height"
+msgstr "Hauteur du lecteur"
+
+#: svp-silverlight/svp-settings.php:100
+msgid "Media RSS publication"
+msgstr "Publication du Media RSS"
+
+#: svp-silverlight/svp-settings.php:104
+msgid "Items count"
+msgstr "Nombre d'articles"
+
+#: svp-silverlight/svp-settings.php:107
+msgid "You can put 0 to indicate an illimited count."
+msgstr "En plaçant 0, vous indiquerez une valeur illimitée."
+
+#: svp-silverlight/svp-settings.php:118
+msgid "Saves changes"
+msgstr "Enregistrer les modifications"
+
+#: svp-silverlight/svp-silverlight.php:162
+msgid "We have problem finding your &laquo;&nbsp;/wp-admin/upgrade.php&nbsp;&raquo;"
+msgstr "Nous avons rencontré un problème en cherchant &laquo;&nbsp;/wp-admin/upgrade.php&nbsp;&raquo;"
+
+#: svp-silverlight/svp-silverlight.php:282
+msgid "SVP"
+msgstr "SVP"
+
+#: svp-silverlight/svp-silverlight.php:285
+msgid "SVP Settings"
+msgstr "Paramètres"
+
+#: svp-silverlight/svp-silverlight.php:286
+msgid "SVP About"
+msgstr "A propos"
+
+#: svp-silverlight/svp-silverlight.php:410
+msgid "None movie found on the server"
+msgstr "Aucune vidéo trouvée sur le serveur"
+
+#: svp-silverlight/svp-silverlight.php:425
+#, php-format
+msgid "(attached to %u post(s))"
+msgstr "(associée à %u article(s))"
+
+#: svp-silverlight/includes/svp-movies.php:50
+msgid "An error occurred with the message: "
+msgstr "Une erreur est survenur avec le message : "
+
+#: svp-silverlight/includes/svp-movies.php:62
+msgid "Incorrect data source. Please check your URL and directory data source in the plugin settings."
+msgstr "Source de données incorrecte. Veuillez vérifier l'URL et le répertoire de source de données dans les paramètres du plugin."
+
+#~ msgid "Player background"
+#~ msgstr "Arrière-plan du lecteur"
+
+#~ msgid "Player options"
+#~ msgstr "Options du lecteur"
+
+#~ msgid "Show comments"
+#~ msgstr "Afficher les commentaires"
+
+#~ msgid "Chapters navigation"
+#~ msgstr "Navigation entre chapitres"
+
+#~ msgid "Autoplay"
+#~ msgstr "Lecture automatique"
+
+#~ msgid "A friend wants to share a movie with you"
+#~ msgstr "Un(e) ami(e) souhaite partager une vidéo avec vous"
+
+#~ msgid "Post URL not found"
+#~ msgstr "URL de l'article non trouvée"
+
+#~ msgid "Error sending email"
+#~ msgstr "Erreur lors de l'envoi de l'email"
+
+#~ msgid "Player background color"
+#~ msgstr "Arrière-plan coloré du lecteur"
+
+#~ msgid "Watermark image"
+#~ msgstr "Image Watermark"
+
+#~ msgid "Watermark image position"
+#~ msgstr "Position de l'image Watermark"
+
+#~ msgid "Watermark image opacity"
+#~ msgstr "Opacité de l'image Watermark"
+
+#~ msgid "Others"
+#~ msgstr "Autres"
+
+#~ msgid "Show home page playlist"
+#~ msgstr "Afficher la playlist sur la page d'accueil"
+
+#, fuzzy
+#~ msgid "SVP Silverlight Settings"
+#~ msgstr "Paramètres SVP"
+
+#, fuzzy
+#~ msgid "SVP Silverlight Statistics"
+#~ msgstr "Statistiques SVP"
+
+#~ msgid "Statistics"
+#~ msgstr "Statistiques"
+
+#, fuzzy
+#~ msgid "SVP Silverlight About"
+#~ msgstr "A propos de SVP"
+
+#~ msgid "You are now installing Silverlight, refresh your browser when done."
+#~ msgstr ""
+#~ "Vous êtes en train d'installer Silverlight, actualisez votre navigateur "
+#~ "lorsque vous avez terminé."
+
+#~ msgid ""
+#~ "This application needs you to upgrade the Silverlight plugin that runs "
+#~ "it. An older version is installed. Click here to upgrade it."
+#~ msgstr ""
+#~ "Cette application a besoin de mettre à jour le plugin Silverlight. Une "
+#~ "ancienne version est installée. Cliquez ici pour mettre à jour."
+
+#~ msgid ""
+#~ "You are now upgrading Silverlight. When this is done, please restart your "
+#~ "browser."
+#~ msgstr ""
+#~ "Le plugin Silverlight est en train d'être mis à jour. Lorsque vous avez "
+#~ "terminé, merci d'actualiser votre navigateur."
+
+#~ msgid "Please restart your browser."
+#~ msgstr "Merci de redémarrer votre navigateur."
+
+#~ msgid "This browser doesn't support Silverlight, sorry!"
+#~ msgstr "Ce navigateur ne supporte pas le Silverlight, désolé!"
+
+#~ msgid "posted by %s on %s"
+#~ msgstr "publié par %s le %s"
+
+#~ msgid ""
+#~ "This application needs you to use the Silverlight plugin. Click here to "
+#~ "install it."
+#~ msgstr ""
+#~ "Cette application a besoin d'utiliser le plugin Silverlight. Cliquez ici "
+#~ "pour l'installer."
+
+#~ msgid "Search results for &#8220;%s&#8221;"
+#~ msgstr "Résultats de recherche pour &#8220;%s&#8221;"
+
+#~ msgid "No statistics data found."
+#~ msgstr "Aucune données de statistiques trouvée."
+
+#~ msgid "&larr; Back to All Statistics"
+#~ msgstr "&larr; Retour à toutes les statistiques"
+
+#~ msgid "All"
+#~ msgstr "Tout"
+
+#~ msgid "Started > 100"
+#~ msgstr "Démarrage > 100"
+
+#~ msgid "Started > 20"
+#~ msgstr "Démarrage > 20"
+
+#~ msgid "Finished > 100"
+#~ msgstr "Fin > 100"
+
+#~ msgid "Finished > 20"
+#~ msgstr "Fin > 20"
+
+#~ msgid "Search Movies:"
+#~ msgstr "Rechercher des vidéos :"
+
+#~ msgid "Search Movies"
+#~ msgstr "Rechercher des vidéos"
+
+#~ msgid "Filename"
+#~ msgstr "Nom du fichier"
+
+#~ msgid "Started"
+#~ msgstr "Démarrage"
+
+#~ msgid "Finished"
+#~ msgstr "Fin"
+
+#~ msgid "Order"
+#~ msgstr "Classement"
+
+#~ msgid "No matching stats were found !"
+#~ msgstr "Pas de statistiques correspondantes trouvées !"
+
+#~ msgid "Displaying %s&#8211;%s of %s"
+#~ msgstr "Affichage de %s&#8211;%s sur %s"
+
+#~ msgid "Top right corner"
+#~ msgstr "Coin supérieur droit"
+
+#~ msgid "Bottom right corner"
+#~ msgstr "Coin inférieur droit"
+
+#~ msgid "Bottom left corner"
+#~ msgstr "Con inférieur gauche"
+
+#~ msgid "Top left corner"
+#~ msgstr "Coin supérieur gauche"
