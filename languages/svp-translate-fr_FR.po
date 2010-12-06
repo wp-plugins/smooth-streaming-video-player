@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SVP Plugin for WordPress\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-24 14:23+0100\n"
-"PO-Revision-Date: 2010-11-24 14:29+0100\n"
+"POT-Creation-Date: 2010-12-06 12:41+0100\n"
+"PO-Revision-Date: 2010-12-06 12:42+0100\n"
 "Last-Translator: Agence Adenova <agence@adenova.fr>\n"
 "Language-Team: Adenova <agence@adenova.fr>\n"
 "MIME-Version: 1.0\n"
@@ -128,7 +128,7 @@ msgstr "Les options de la vidéo ont correctement été mises à jour."
 
 #: svp-silverlight/svp-settings.php:42
 msgid "Settings have been correctly updated."
-msgstr "Les options de la vidéo ont correctement été mises à jour."
+msgstr "Les paramètres de configuration ont correctement été mis à jour."
 
 #: svp-silverlight/svp-settings.php:50
 #: svp-silverlight/svp-silverlight.php:285
@@ -210,7 +210,7 @@ msgstr "(associée à %u article(s))"
 
 #: svp-silverlight/includes/svp-movies.php:50
 msgid "An error occurred with the message: "
-msgstr "Une erreur est survenur avec le message : "
+msgstr "Une erreur est survenue avec le message : "
 
 #: svp-silverlight/includes/svp-movies.php:62
 msgid "Incorrect data source. Please check your URL and directory data source in the plugin settings."

@@ -4,7 +4,7 @@
 Plugin Name: SVP
 Plugin URI: http://www.adenova.fr/svp-silverlight-plugin-wordpress/
 Description: A Smooth Streaming Video Player.
-Version: 1.4.0
+Version: 1.4.2
 Author: Agence Adenova
 Author URI: http://www.adenova.fr
 */
@@ -15,7 +15,7 @@ if (!class_exists("SVP_Silverlight"))
 	if (!defined("SVP_DB_VERSION"))
 		define("SVP_DB_VERSION", "1.0.0");
 	if (!defined("SVP_PLUGIN_VERSION"))
-		define("SVP_PLUGIN_VERSION", "1.4.0");
+		define("SVP_PLUGIN_VERSION", "1.4.2");
 	if (!defined("SVP_USER_AGENT_IPHONE"))
 		define("SVP_USER_AGENT_IPHONE", "IPHONE");
 	if (!defined("SVP_USER_AGENT_IPAD"))
@@ -667,7 +667,7 @@ if (!function_exists("the_smooth_video_player") && $svp_plugin instanceof SVP_Si
 		$svp_movies = new SVP_Movies();
 		
 		// Récupère l'identifiant courant ou celui du dernier article publié possédant une vidéo
-		$id = $wp_query->get_queried_object_id();
+		$id = get_the_ID();
 		if ($id == 0)
 			$id = $svp_movies->get_lastupdated_movie_post_id();
 		
@@ -715,7 +715,8 @@ if (!function_exists("the_smooth_video_player") && $svp_plugin instanceof SVP_Si
 					$html .= '<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="' . $player_width . '" height="' . $player_height . '">';
 					$html .= '<param name="source" value="' . plugins_url('/player/Player.xap', __FILE__) . '"/>';
 					$html .= '<param name="onError" value="onSilverlightError" />';
-					$html .= '<param name="background" value="black" />';
+					$html .= '<param name="background" value="transparent" />';
+					$html .= '<param name="windowless" value="true" />';
 					$html .= '<param name="minRuntimeVersion" value="4.0.50401.0" />';
 					$html .= '<param name="autoUpgrade" value="true" />';
 					if ($params = $svp_plugin->getSilverlightParams($svp_movies->get_locale_options($id), $id)) 

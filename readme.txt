@@ -2,7 +2,7 @@
 Contributors: adenova
 Tags: video, streaming, silverlight
 Requires at least: 2.9
-Tested up to: 3.0.1
+Tested up to: 3.0.2
 Stable tag: trunk
 License: GPLv2
 
@@ -62,6 +62,12 @@ The SVP plugin exposes a Media RSS feed : here, you can indicate the count items
 
 == Changelog ==
 
+= 1.4.2 =
+* Add <param name="windowless" value="true" /> for a z-index management under IE in "the_smooth_video_player()" template tag HTML output.
+* Modify "background" param value from "black" to "transparent" for a better visual integration in "the_smooth_video_player()" template tag HTML output.
+* Post ID read fixed from posts page list.
+* Translation errors fixed in two messages.
+
 = 1.4.0 =
 * Add iPhone and iPad videos play.
 * Rights problem on Player.xap file fixed.
@@ -77,6 +83,9 @@ The SVP plugin exposes a Media RSS feed : here, you can indicate the count items
 * This is the initial version of our plugin.
 
 == Upgrade Notice ==
+
+= 1.4.2 =
+* You have to upgrade to this version if you want to show the silverlight player in the posts page list (stable version).
 
 = 1.4.0 =
 * With this version, you can play your videos on iPhone and iPad (stable version).
