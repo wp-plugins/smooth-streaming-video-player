@@ -6,7 +6,7 @@ Tested up to: 3.0.2
 Stable tag: trunk
 License: GPLv2
 
-This plugin allow you to play some Smooth Streanming videos linked to your posts blog.
+This plugin allow you to play some Smooth Streaming videos linked to your posts blog.
 
 == Description ==
 
