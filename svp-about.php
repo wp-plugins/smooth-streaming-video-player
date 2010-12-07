@@ -15,7 +15,7 @@ $plugin_data = get_plugin_data(realpath(dirname(__FILE__)) . "/svp-silverlight.p
 	<div id="icon-svp-silverlight" class="icon32"><br /></div>
 	<h2><?php _e("About", "svp-translate"); ?></h2>
 	<p><?php printf(__("Le plugin SVP (Smooth Streaming Video Player) a été développé par l'agence <a href='%s'>Adenova</a>.", "svp-translate"), $plugin_data['AuthorURI']); ?></p>
-	<p><a href="<?php print $plugin_data['AuthorURI']; ?>"><img src="<?php print plugins_url("svp-silverlight/images/logo_adenova.jpg"); ?>" alt="Adenova" title="Adenova" /></a></p>
+	<p><a href="<?php print $plugin_data['AuthorURI']; ?>"><img src="<?php print plugins_url(get_plugin_dirname() . "/images/logo_adenova.jpg"); ?>" alt="Adenova" title="Adenova" /></a></p>
 	<p><?php _e("Il permet la lecture de vidéos encodées en Smooth Streaming avec Silverlight sur un PC ou un Mac et avec le tag HTML 5 &lt;video&gt; sur iPhone et iPad.", "svp-translate"); ?></p>
 	<p><?php _e("La première version est sortie en juin 2010.", "svp-translate"); ?></p>
 	<p><?php printf(__("Vous pouvez consulter <a href='%s'>la page consacrée</a> à ce plugin sur le site d'Adenova.", "svp-translate"), $plugin_data['PluginURI']); ?></p>

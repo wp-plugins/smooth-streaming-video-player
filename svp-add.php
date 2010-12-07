@@ -10,10 +10,10 @@ wp_enqueue_style('global');
 wp_enqueue_style('wp-admin');
 wp_enqueue_style('media');
 
-wp_enqueue_style("svp-post", plugins_url("svp-silverlight/styles/post.css"), array(), false, "screen");
+wp_enqueue_style("svp-post", plugins_url(get_plugin_dirname() . "/styles/post.css"), array(), false, "screen");
 
 wp_enqueue_script("jquery");
-wp_enqueue_script("svp-metabox-js", plugins_url("svp-silverlight/scripts/metabox.js"));
+wp_enqueue_script("svp-metabox-js", plugins_url(get_plugin_dirname() . "/scripts/metabox.js"));
 
 ?>
 <html>

@@ -25,7 +25,7 @@ installed. But your WordPress website can be stay hosted on a Apache web server.
 
 == Installation ==
 
-1. Just place the svp-silverlight directory in your WordPress plugins directory 
+1. Just place the smooth-streaming-video-player directory in your WordPress plugins directory 
 2. Activate the SVP plugin through the 'Plugins' menu in WordPress
 3. Place `<?php the_smooth_video_player(); ?>` in your templates (i.e. in 'single.php')
 

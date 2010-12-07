@@ -1,5 +1,4 @@
 <?php
-
 /*
 Plugin Name: SVP
 Plugin URI: http://www.adenova.fr/svp-silverlight-plugin-wordpress/
@@ -22,15 +21,25 @@ if (!class_exists("SVP_Silverlight"))
 		define("SVP_USER_AGENT_IPAD", "IPAD");
 	if (!defined("SVP_USER_AGENT_OTHER"))
 		define("SVP_USER_AGENT_OTHER", "OTHER");
+		
+	/**
+		* Ajout d'une fonction en charge de retourner le nom du répertoire courant
+		* du plugin.
+		*/
+	if (!function_exists('get_plugin_dirname'))
+	{
+		function get_plugin_dirname()
+		{
+			return str_replace('/' . basename(__FILE__), '', plugin_basename(__FILE__));
+		}
+	}
 	
 	include_once("includes/svp-utils.php");
 	
 	class SVP_Silverlight
 	{
 		// Propriétés
-		var $_admin_pages = array(
-			"svp-silverlight/svp-settings.php",
-			"svp-silverlight/svp-about.php");
+		var $_admin_pages = array("svp-settings.php", "svp-about.php");
 		var $_post_pages = array("post.php", "post-new.php");
 		var $_authorized_params_keys = array("width", "height");
 		var $_authorized_params_values = array();
@@ -57,7 +66,9 @@ if (!class_exists("SVP_Silverlight"))
 			
 			// Appelle les hooks d'actions
 			$this->add_actions();
-		
+			
+			// Modifie le contenu de la liste des pages d'administration (ajoute devant le chemin d'accès au répertoire du plugin)
+			array_walk($this->_admin_pages, array($this, 'addPluginDirname'));
 		}
 		
 		// Retourne le chemin absolu vers le plugin
@@ -126,6 +137,11 @@ if (!class_exists("SVP_Silverlight"))
 		function getBrowser()
 		{
 			return (array)$this->browser;
+		}
+		
+		function addPluginDirname(&$item, $key)
+		{
+			$item = call_user_func('get_plugin_dirname') . '/' . $item;
 		}
 		
 		// Installation du plugin
@@ -279,11 +295,11 @@ if (!class_exists("SVP_Silverlight"))
 		function add_admin_menu()
 		{
 			if (function_exists("add_menu_page"))
-				add_menu_page(__("SVP", "svp-translate"), __("SVP", "svp-translate"), "manage_options", "svp-silverlight/svp-settings.php", "", plugins_url("svp-silverlight/images/svp-settings.png"));
+				add_menu_page(__("SVP", "svp-translate"), __("SVP", "svp-translate"), "manage_options", get_plugin_dirname() . "/svp-settings.php", "", plugins_url(get_plugin_dirname() . "/images/svp-settings.png"));
 			if (function_exists("add_submenu_page"))
 			{
-				add_submenu_page("svp-silverlight/svp-settings.php", __("SVP Settings", "svp-translate"), __("Settings", "svp-translate"), "manage_options", "svp-silverlight/svp-settings.php");
-				add_submenu_page("svp-silverlight/svp-settings.php", __("SVP About", "svp-translate"), __("About", "svp-translate"), "manage_options", "svp-silverlight/svp-about.php");
+				add_submenu_page(get_plugin_dirname() . "/svp-settings.php", __("SVP Settings", "svp-translate"), __("Settings", "svp-translate"), "manage_options", get_plugin_dirname() . "/svp-settings.php");
+				add_submenu_page(get_plugin_dirname() . "/svp-settings.php", __("SVP About", "svp-translate"), __("About", "svp-translate"), "manage_options", get_plugin_dirname() . "/svp-about.php");
 			}
 		}
 		
@@ -293,27 +309,27 @@ if (!class_exists("SVP_Silverlight"))
 			// CSS pour les pages d'administration du plugin
 			if (in_array($page, $this->_admin_pages)
 				|| in_array($page, $this->_post_pages))
-				wp_enqueue_style("svp-admin", plugins_url("svp-silverlight/styles/admin.css"), array(), false, "screen");
+				wp_enqueue_style("svp-admin", plugins_url(get_plugin_dirname() . "/styles/admin.css"), array(), false, "screen");
 			
 			// CSS et JS pour les pages d'ajout et d'édition d'un article
 			if (in_array($page, $this->_post_pages))
 			{
 				$browser = $this->getBrowser();
-				wp_enqueue_style("svp-post", plugins_url("svp-silverlight/styles/post.css"), array(), false, "screen");
+				wp_enqueue_style("svp-post", plugins_url(get_plugin_dirname() . "/styles/post.css"), array(), false, "screen");
 				if ($browser["name"] == "msie" && $browser["version"] == 8)
 				{
-					wp_enqueue_style("svp-post-ie", plugins_url("svp-silverlight/styles/post-ie.css"), array(), false, "screen");
+					wp_enqueue_style("svp-post-ie", plugins_url(get_plugin_dirname() . "/styles/post-ie.css"), array(), false, "screen");
 					global $wp_styles;
 					$wp_styles->add_data("svp-post-ie", "conditional", "gt IE 7");
 				}
 				if ($browser["name"] == "msie" && $browser["version"] == 7)
 				{
-					wp_enqueue_style("svp-post-ie7", plugins_url("svp-silverlight/styles/post-ie7.css"), array(), false, "screen");
+					wp_enqueue_style("svp-post-ie7", plugins_url(get_plugin_dirname() . "/styles/post-ie7.css"), array(), false, "screen");
 					global $wp_styles;
 					$wp_styles->add_data("svp-post-ie7", "conditional", "lte IE 7");
 				}
 				wp_enqueue_script("jquery");
-				wp_enqueue_script("svp-metabox-js", plugins_url("svp-silverlight/scripts/metabox.js"));
+				wp_enqueue_script("svp-metabox-js", plugins_url(get_plugin_dirname() . "/scripts/metabox.js"));
 			}
 			
 			// Styles et JS spécifiques
@@ -622,7 +638,7 @@ if (!class_exists("SVP_Silverlight"))
 		}
 		
 		function podcast() { 
-			load_template(ABSPATH . PLUGINDIR . '/svp-silverlight/svp-mrss.php');
+			load_template(ABSPATH . PLUGINDIR . '/' . get_plugin_dirname() . '/svp-mrss.php');
 		}
 	}
 }

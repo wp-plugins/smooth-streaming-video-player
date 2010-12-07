@@ -2,7 +2,7 @@
 // Chargement du Bootstrap WordPress
 require_once(ABSPATH . '/wp-load.php');
 require_once(ABSPATH . '/wp-admin/includes/plugin.php');
-require_once(ABSPATH . PLUGINDIR . '/svp-silverlight/includes/svp-movies.php');
+require_once(ABSPATH . PLUGINDIR . '/' . get_plugin_dirname() . '/includes/svp-movies.php');
 
 $plugin_data = get_plugin_data(realpath(dirname(__FILE__)) . "/svp-silverlight.php");
 $title = get_bloginfo('name') . ' - ' . $plugin_data['Name'];
