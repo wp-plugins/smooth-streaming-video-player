@@ -36,6 +36,32 @@ if (!class_exists("SVP_Silverlight"))
 		}
 	}
 	
+	/**
+	 * Ajout d'une fonction en charge d'assurer la suppression d'un répertoire non vide.
+	 */
+	if (!function_exists('rrmdir'))
+	{
+		function rrmdir($dir)
+		{
+			if (is_dir($dir))
+			{
+				$objects = scandir($dir); 
+				foreach ($objects as $object)
+				{ 
+					if ($object != "." && $object != "..")
+					{
+						if (filetype($dir . "/" . $object) == "dir")
+							rrmdir($dir . "/" . $object);
+						else
+							unlink($dir . "/" . $object);
+					}
+				}
+				reset($objects);
+				rmdir($dir);
+			}
+		}
+	}
+	
 	include_once("includes/svp-utils.php");
 	
 	class SVP_Silverlight
@@ -263,7 +289,7 @@ if (!class_exists("SVP_Silverlight"))
 				{
 					// Supprime l'ancien répertoire
 					if (is_dir(realpath(dirname(__FILE__) . '/../svp-silverlight')))
-						rmdir(realpath(dirname(__FILE__) . '/../svp-silverlight'));
+						rrmdir(realpath(dirname(__FILE__) . '/../svp-silverlight'));
 				}
 			}
 		}
