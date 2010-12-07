@@ -15,6 +15,8 @@ if (!class_exists("SVP_Silverlight"))
 		define("SVP_DB_VERSION", "1.0.0");
 	if (!defined("SVP_PLUGIN_VERSION"))
 		define("SVP_PLUGIN_VERSION", "1.4.2");
+	if (!defined("SVP_PLUGIN_CHANGE_VERSION"))
+		define("SVP_PLUGIN_CHANGE_VERSION", "1.4.2");
 	if (!defined("SVP_USER_AGENT_IPHONE"))
 		define("SVP_USER_AGENT_IPHONE", "IPHONE");
 	if (!defined("SVP_USER_AGENT_IPAD"))
@@ -152,6 +154,9 @@ if (!class_exists("SVP_Silverlight"))
 			
 			// Ajoute ou met à jour les options de configurations du plugin
 			$this->add_options();
+			
+			// Supprime éventuellement l'ancien répertoire du plugin
+			$this->delete_old_plugin_directory();
 		}
 		
 		// Désinstallation du plugin
@@ -173,7 +178,7 @@ if (!class_exists("SVP_Silverlight"))
 			if (@is_file(ABSPATH . '/wp-admin/includes/upgrade.php'))
 				include_once(ABSPATH . '/wp-admin/includes/upgrade.php');
 			elseif (@is_file(ABSPATH . '/wp-admin/upgrade-functions.php'))
-				include_once(ABSPATH . '/wp-admin/upgrade-functions.php' );
+				include_once(ABSPATH . '/wp-admin/upgrade-functions.php');
 			else
 				wp_die(__("We have problem finding your &laquo;&nbsp;/wp-admin/upgrade.php&nbsp;&raquo;", "svp-translate"));
 			
@@ -247,6 +252,23 @@ if (!class_exists("SVP_Silverlight"))
 			add_action("edit_form_advanced", array(&$this, "add_movie_metabox"));
 		}
 		
+		// Supprime l'ancien répertoire du plugin (svp-silverlight)
+		function delete_old_plugin_directory()
+		{
+			// Version courante inférieure à la version 1.4.2
+			if (version_compare(get_option('svp_plugin_version', '1.0.0'), SVP_PLUGIN_CHANGE_VERSION) == -1)
+			{
+				// S'assure que le nouveau répertoire existe bien
+				if (file_exists(realpath(dirname(__FILE__) . '/../smooth-streaming-video-player')))
+				{
+					// Supprime l'ancien répertoire
+					if (is_dir(realpath(dirname(__FILE__) . '/../svp-silverlight')))
+						rmdir(realpath(dirname(__FILE__) . '/../svp-silverlight'));
+				}
+			}
+		}
+		
+		// Ajoute l'appel au Media RSS
 		function add_feeds()
 		{
 			add_feed('svp-podcast', array($this, 'podcast'));
@@ -279,13 +301,12 @@ if (!class_exists("SVP_Silverlight"))
 		}
 		
 		// Indique si le player doit être affiché pour l'article courant
-		// Sur la page d'accueil, le player doit être systématiquement affiché
 		function show_player_check()
 		{
 			global $wp_query;
 			include_once ("includes/svp-movies.php");
 			$svp_movies = new SVP_Movies();
-			if (($svp_movies->has_movie_file_entry($wp_query->get_queried_object_id())
+			if (($svp_movies->has_movie_file_entry(get_the_ID())
 				&& is_single()))
 				return true;
 			return false;
