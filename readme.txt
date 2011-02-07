@@ -1,12 +1,12 @@
 === Smooth Streaming Video Player (SVP) ===
 Contributors: adenova
-Tags: video, streaming, silverlight, mp4, wmv, ism, live
+Tags: video, streaming, silverlight
 Requires at least: 2.9
 Tested up to: 3.0.4
 Stable tag: 1.5.0
 License: GPLv2
 
-This plugin allow you to play some Smooth Streaming videos linked to your posts blog.
+This plugin allow you to play some adaptive streaming (with Smooth Streaming in live mode or not) and progressive download videos linked to your posts blog.
 
 == Description ==
 
@@ -20,7 +20,7 @@ This plugin has these main features :
 * Media RSS exposition of latest videos linked to the blog posts
 * HTML 5 video tag implementation to play videos (MP4 for progressive download videos and Smooth Streaming for adaptive streaming videos) on iPhone and iPad
 
-Warning : your Smooth Streaming videos (in Live mode or not) must be hosted on a IIS web server with 'Media Services' extension installed. But your WordPress website can be stay hosted on a Apache web server. Other types of videos can be hosted on the server of your choice.
+Warning : your Smooth Streaming videos (in Live mode or not) must be hosted on a IIS web server with 'Media Services' extension installed or on Windows Azure storage. But your WordPress website can be stay hosted on a Apache web server. Other types of videos can be hosted on the server of your choice.
 
 == Installation ==
 
