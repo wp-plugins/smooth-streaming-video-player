@@ -1,6 +1,6 @@
 === Smooth Streaming Video Player (SVP) ===
 Contributors: adenova
-Tags: video, streaming, silverlight
+Tags: video, streaming, silverlight, mp4, wmv, ism, live
 Requires at least: 2.9
 Tested up to: 3.0.4
 Stable tag: 1.5.0
@@ -10,24 +10,25 @@ This plugin allow you to play some Smooth Streaming videos linked to your posts 
 
 == Description ==
 
-With this plugin, you can link a Smooth Streaming video to a post and play it inside a Silverlight player on a PC or Mac. You can also play your Smooth Streaming video on a iPhone or iPad because this plugin implements a HTML 5 video tag.
+With this plugin, you can link adaptive streaming (with Smooth Streaming in live mode or not) and progressive download videos (MP4 and WMV) to a post and play it inside a Silverlight player on a PC or Mac. You can also play your Smooth Streaming video on a iPhone or iPad because this plugin implements a HTML 5 video tag.
 
 This plugin has these main features :
 
 * SMF 2.3 player implementation 
-* Simple administration to configure the plugin 
-* Easy to link a Smooth Streaming Video to a post 
-* Media RSS exposition of latest Smooth Streaming Videos linked to the blog posts 
-* HTML 5 video tag implementation to play Smooth Streaming Videos on iPhone and iPad
+* Simple administration to configure the plugin
+* Easy to link a video to a post
+* Media RSS exposition of latest videos linked to the blog posts
+* HTML 5 video tag implementation to play videos (MP4 for progressive download videos and Smooth Streaming for adaptive streaming videos) on iPhone and iPad
 
-Warning : your Smooth Streaming videos must be hosted on a IIS web server with 'Media Services' extension 
-installed. But your WordPress website can be stay hosted on a Apache web server.
+Warning : your Smooth Streaming videos (in Live mode or not) must be hosted on a IIS web server with 'Media Services' extension installed. But your WordPress website can be stay hosted on a Apache web server. Other types of videos can be hosted on the server of your choice.
 
 == Installation ==
 
 1. Just place the smooth-streaming-video-player directory in your WordPress plugins directory 
 2. Activate the SVP plugin through the 'Plugins' menu in WordPress
-3. Place `<?php the_smooth_video_player(); ?>` in your templates (i.e. in 'single.php')
+3. Add, configure and scan a source of videos
+4. Link a video to a post
+5. Place `<?php the_smooth_video_player(); ?>` in your templates (i.e. in 'single.php')
 
 == Frequently Asked Questions ==
 
