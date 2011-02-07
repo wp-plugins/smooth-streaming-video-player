@@ -119,7 +119,7 @@ msgid "You must publish the post before writing movie datas in database."
 msgstr "Vous devez publier l'article avant l'enregistrement des données de la vidéo en base de données."
 
 #: svp-silverlight/svp-movie-metabox.php:63
-msgid "An error occurred writing movie datas in database or there is not datas to update."
+msgid "An error occured writing movie datas in database or there is not datas to update."
 msgstr "Une erreur a eu lieu lors de l'écriture des données de la vidéo en base de données ou il n'y avait pas de données à mettre à jour."
 
 #: svp-silverlight/svp-movie-metabox.php:64
@@ -209,7 +209,7 @@ msgid "(attached to %u post(s))"
 msgstr "(associée à %u article(s))"
 
 #: svp-silverlight/includes/svp-movies.php:50
-msgid "An error occurred with the message: "
+msgid "An error occured with the message: "
 msgstr "Une erreur est survenue avec le message : "
 
 #: svp-silverlight/includes/svp-movies.php:62

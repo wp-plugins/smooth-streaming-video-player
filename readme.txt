@@ -2,8 +2,8 @@
 Contributors: adenova
 Tags: video, streaming, silverlight
 Requires at least: 2.9
-Tested up to: 3.0.2
-Stable tag: trunk
+Tested up to: 3.0.4
+Stable tag: 1.5.0
 License: GPLv2
 
 This plugin allow you to play some Smooth Streaming videos linked to your posts blog.
@@ -14,7 +14,7 @@ With this plugin, you can link a Smooth Streaming video to a post and play it in
 
 This plugin has these main features :
 
-* SMF 2.2 player implementation 
+* SMF 2.3 player implementation 
 * Simple administration to configure the plugin 
 * Easy to link a Smooth Streaming Video to a post 
 * Media RSS exposition of latest Smooth Streaming Videos linked to the blog posts 
@@ -54,13 +54,22 @@ Examples of template tag call :
 
 == Screenshots ==
 
-1. Main configuration page. Here, you must indicate the URL of your videos web server, the directory where
-your videos are placed on this web server. You can also configure the default width and height of the player.
-The SVP plugin exposes a Media RSS feed : here, you can indicate the count items to show in this feed.
-2. This screenshot shows the interface where the administrator can link a video to a post.
-2. The same screenshot but after the administrator has linked a video to a post.
+1. First part of main configuration page. You can configure the default width and height of the player. The SVP plugin exposes a Media RSS feed : here, you can indicate the count items to show in this feed. This feed can be acceded addind `?feed=svp-podcast` after your main blog URL.
+2. Second part of main configuration page. Here, you can see the list of your own sources of videos. You can also add a new source of videos.
+3. When you choose to add a new source of videos from SVP admin menu, you access to this page to select your type of source of videos to add.
+4. This screenshot shows the list of videos founded on a source of videos you choose to scan.
+5. Page for updating data of a source of videos.
+6. This is the list of selection of a video to be associated with a post. This area of selection is present in the edit page of a post.
+7. Preview of a video accessible from the list of videos in the edit page of a post.
 
 == Changelog ==
+
+= 1.5.0 =
+* Add a multiple sources of videos management.
+* Add pages to add, edit and delete a source of videos.
+* Add a page to scan a source of videos (to retrieve the videos existing on the source).
+* Update of selection of a video in post edition page.
+* Add a possibility to preview the videos to select in post edition page.
 
 = 1.4.2 =
 * Add <param name="windowless" value="true" /> for a z-index management under IE in "the_smooth_video_player()" template tag HTML output.

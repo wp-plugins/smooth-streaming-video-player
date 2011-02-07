@@ -1,202 +1,210 @@
-/// <reference path="jquery-1.4.1.js"/>
+var SVP_Metabox = new Object() || SVP_Metabox;
+jQuery(document).ready(
+	function ($) {
 
-/**
-*
-* Gestion du metabox Smooth Streaming Movie.
-* Dépendance: jquery.js.
-*
-* Author: Agence Adenova (http://www.adenova.fr)
-*
-*/
+		$('a.svp-play').click(function (e) {
+			var $target = $(e.target);
+			SVP_Metabox._params.target = $target;
+			SVP_Metabox.Show();
+		});
 
-var SvpMetaboxManager = new Object || SvpMetaboxManager;
+		$('a.svp-next').live('click', function (e) {
+			SVP_Metabox.Next(e);
+		});
 
-// Méthode de chargement de la liste des vidéos
-SvpMetaboxManager.Load = function () {
+		$('a.svp-previous').live('click', function (e) {
+			SVP_Metabox.Previous(e);
+		});
 
-    jQuery(document).ready(function ($) {
+		$('a.svp-select').live('click', function (e) {
+			SVP_Metabox.Select(e);
+		});
 
-        // Effectue le chargement de la liste des vidéos en Ajax
-        var data = {
-            action: "get_movies",
-            postid: SvpMetaboxManager.postID,
-            _ajax_nonce: SvpMetaboxManager._ajax_nonce_get_movies
-        };
+		SVP_Metabox._collect = function () {
+			var $target = SVP_Metabox._params.target;
+			SVP_Metabox._params.video_url = $target.next('span.svp-video-url').html();
+			SVP_Metabox._params.delivery_method = 'ProgressiveDownload';
+			if ($target.next().next('span.svp-delivery-method').html() != '')
+				SVP_Metabox._params.delivery_method = $target.next().next('span.svp-delivery-method').html();
+		},
 
-        jQuery.post(ajaxurl, data, function (response) {
-            $("#svp-movies-items").html(response);
+		SVP_Metabox._inject = function () {
+			this._collect();
+			var $host = $('<div id="svp-silverlight-host"></div>');
+			$host.html(
+				Silverlight.createObject(
+					this._params.player_url,
+					null,
+					'svp-sl-player',
+					{
+						width: '100%',
+						height: '100%',
+						background: 'transparent',
+						minRuntimeVersion: '4.0.50401.0',
+						autoUpgrade: 'true',
+						windowless: 'true'
+					},
+					null,
+					'MediaUrl=' + this._params.video_url + ',DeliveryMethod=' + this._params.delivery_method
+				)
+			);
+			$host.appendTo($("#svp-player-container"));
+			var links = '<a href="javascript:void(0);" class="svp-button svp-close close" title="' + this._params.close_label + '"><span>' + this._params.close_label + '</span></a>';
+			links += this._get_previous_button();
+			links += this._get_next_button();
+			links += this._get_select_button();
+			$(links).appendTo($("#svp-player-container"));
+			var video_data = this._get_video_data();
+			$(video_data).appendTo($("#svp-player-container"));
+			$("#svp-player-container").trigger('onInject');
+		},
 
-            // Initialise le gestionnaire de sélection 
-            // quand le chargement de la liste est terminé
-            SvpMetaboxManager.Select();
-        });
+		SVP_Metabox._update = function () {
+			this._collect();
+			$host = $('#svp-silverlight-host');
+			$host.html('');
+			$host.html(
+				Silverlight.createObject(
+					this._params.player_url,
+					null,
+					'svp-sl-player',
+					{
+						width: '100%',
+						height: '100%',
+						background: 'transparent',
+						minRuntimeVersion: '4.0.50401.0',
+						autoUpgrade: 'true',
+						windowless: 'true'
+					},
+					null,
+					'MediaUrl=' + this._params.video_url + ',DeliveryMethod=' + this._params.delivery_method
+				)
+			);
+			$('#svp-player-container').children('a.svp-previous').removeClass('svp-disabled');
+			if (this._has_previous_video() == false)
+				$('#svp-player-container').children('a.svp-previous').addClass('svp-disabled');
+			$('#svp-player-container').children('a.svp-next').removeClass('svp-disabled');
+			if (this._has_next_video() == false)
+				$('#svp-player-container').children('a.svp-next').addClass('svp-disabled');
+			$('#svp-player-container').children('a.svp-select').removeClass('svp-activated');
+			if (this._is_selected_video() == true)
+				$('#svp-player-container').children('a.svp-select').addClass('svp-activated');
+			$('#svp-video-data').children('span.svp-video-filename').html(this._get_video_filename());
+			$('#svp-video-data').children('span.svp-source-name').html(this._get_source_name());
+		},
 
+		SVP_Metabox._destroy = function () {
+			$("#svp-player-container").html('');
+		},
 
-        // Gère les cases à cocher pour les options de configuration locale d'une vidéo
-        $("#svp-movie-current-options input[type=checkbox]").bind("click", function (event) {
-            var current = $(event.currentTarget).get(0);
-            var value = $(current).next().val();
-            (value == "on") ? value = "off" : value = "on";
-            $(current).next().val(value);
-        });
+		SVP_Metabox._get_previous_button = function () {
+			var disabled = '';
+			var $target = SVP_Metabox._params.target;
+			if ($target.parent('span.svp-action').parent('li.svp-row-content').prev('li.svp-row-content').size() == 0)
+				disabled = ' svp-disabled';
+			return '<a href="javascript:void(0);" class="svp-button svp-previous' + disabled + '" title="' + this._params.previous_label + '"><span>' + this._params.previous_label + '</span></a>';
+		},
 
-    });
+		SVP_Metabox._get_next_button = function () {
+			var disabled = '';
+			var $target = SVP_Metabox._params.target;
+			if ($target.parent('span.svp-action').parent('li.svp-row-content').next('li.svp-row-content').size() == 0)
+				disabled = ' svp-disabled';
+			return '<a href="javascript:void(0);" class="svp-button svp-next' + disabled + '" title="' + this._params.next_label + '"><span>' + this._params.next_label + '</span></a>';
+		},
 
-}
+		SVP_Metabox._get_select_button = function () {
+			var activated = '';
+			if (this._get_current_video_id() == $('#svp-video').val())
+				activated = ' svp-activated';
+			return '<a href="javascript:void(0);" class="svp-button svp-select' + activated + '" title="' + this._params.select_label + '"><span>' + this._params.select_label + '</span></a>';
+		},
 
-// Méthode de gestion de la sélection de la vidéo
-SvpMetaboxManager.Select = function () {
+		SVP_Metabox._has_previous_video = function () {
+			var $target = SVP_Metabox._params.target;
+			if ($target.parent('span.svp-action').parent('li.svp-row-content').prev('li.svp-row-content').size() == 0)
+				return false;
+			return true;
+		},
 
-    jQuery(document).ready(function ($) {
+		SVP_Metabox._has_next_video = function () {
+			var $target = SVP_Metabox._params.target;
+			if ($target.parent('span.svp-action').parent('li.svp-row-content').next('li.svp-row-content').size() == 0)
+				return false;
+			return true;
+		},
 
-        // Vérifie que le conteneur de vidéos existe et qu'au moins une vidéo est présente
-        if ($("#svp-movies-items").length == 0 || $("#svp-movies-items li").length == 0)
-            return;
+		SVP_Metabox._get_current_video_id = function () {
+			var $target = SVP_Metabox._params.target;
+			var video_url_id = $target.next('span.svp-video-url').attr('id');
+			var prefix = 'svp-video-url-';
+			return video_url_id.substr(parseInt(prefix.length), parseInt(video_url_id.length) - parseInt(prefix.length));
+		},
 
-        $("#svp-movies-items li").bind("click", function (event) {
-            var selected = false;
-            var current = $(event.currentTarget).get(0);
+		SVP_Metabox._is_selected_video = function () {
+			var $target = SVP_Metabox._params.target;
+			if (this._get_current_video_id() != $('#svp-video').val())
+				return false;
+			return true;
+		},
 
-            if ($(current).hasClass("selected") == false
-                && $(current).hasClass("unselected") == false)
-                return;
+		SVP_Metabox._get_video_filename = function () {
+			var $target = SVP_Metabox._params.target;
+			return $target.parent('span.svp-action').prev().prev('span.svp-video-name').html();
+		},
 
-            if ($(current).hasClass("selected") == true)
-                selected = true;
+		SVP_Metabox._get_source_name = function () {
+			var $target = SVP_Metabox._params.target;
+			return $target.parent('span.svp-action').prev('span.svp-source-name').html();
+		},
 
-            $("#svp-movies-items li").each(function (index) {
-                $(this).removeClass("selected");
-                $(this).addClass("unselected");
-            });
+		SVP_Metabox._get_video_data = function () {
+			var html = '<p id="svp-video-data" class="svp-text-center svp-little-line-height">';
+			html += '<span class="svp-label svp-highlight svp-video-filename">' + this._get_video_filename() + '</span>';
+			html += '<br />';
+			html += '<span class="svp-label svp-downlight svp-source-name">' + this._get_source_name() + '</span>';
+			html += '</p>';
+			return html;
+		},
 
-            if (current.tagName.toLowerCase() == "li") {
+		SVP_Metabox.Show = function () {
+			var me = this;
+			$("#svp-player-container").bind('onInject', function (e) {
+				$("#svp-player-container").lightbox_me({
+					centered: true,
+					onClose: function () { me._destroy(); }
+				});
+			});
+			this._inject();
+		},
 
-                // Modifie la classe CSS de l'élément sélectionné
-                if (selected == false) {
-                    $(current).removeClass("unselected");
-                    $(current).addClass("selected");
-                }
-                else {
-                    $(current).removeClass("selected");
-                    $(current).addClass("unselected");
-                }
+		SVP_Metabox.Next = function (e) {
+			var $from = $(e.target);
+			if ($from.hasClass('svp-disabled') == false) {
+				var $target = SVP_Metabox._params.target;
+				SVP_Metabox._params.target = $target.parent('span.svp-action').parent('li.svp-row-content').next('li.svp-row-content').children('span.svp-action').children('a.svp-play');
+				if (SVP_Metabox._params.target != null)
+					this._update();
+			}
+		},
 
-                // Place le nom de la vidéo dans le champ caché
-                if (selected == false)
-                    $("#svp-selected-movie").val($(current).text());
-                else
-                    $("#svp-selected-movie").val("");
+		SVP_Metabox.Previous = function (e) {
+			var $from = $(e.target);
+			if ($from.hasClass('svp-disabled') == false) {
+				var $target = SVP_Metabox._params.target;
+				SVP_Metabox._params.target = $target.parent('span.svp-action').parent('li.svp-row-content').prev('li.svp-row-content').children('span.svp-action').children('a.svp-play');
+				if (SVP_Metabox._params.target != null)
+					this._update();
+			}
+		}
 
-                // Met à jour l'information en base de données
-                if ($("#svp-selected-movie").val() != "") { // Ajout ou mise à jour
-                    var data = {
-                        action: "add_movie_to_post",
-                        postid: SvpMetaboxManager.postID,
-                        filename: $("#svp-selected-movie").val(),
-                        _ajax_nonce: SvpMetaboxManager._ajax_nonce_add_movie_to_post
-                    };
-                }
-                else { // Suppression
-                    var data = {
-                        action: "delete_post_movie",
-                        postid: SvpMetaboxManager.postID,
-                        _ajax_nonce: SvpMetaboxManager._ajax_nonce_delete_post_movie
-                    };
-                }
-
-                jQuery.post(ajaxurl, data, function (response) {
-                    var error = 0;
-
-                    if (response == 0) { // Erreur
-
-                        // Supprime l'affichage de la vidéo sélectionnée
-                        $(current).removeClass("selected");
-                        $(current).addClass("unselected");
-
-                        // Indique une erreur
-                        error = 2;
-                    }
-
-                    if (response > 1)
-                        error = response;
-
-                    // Change le message avec un effet d'animation pour mettre en avant le changement
-                    SvpMetaboxManager.Show(error, "movie");
-                });
-            }
-        });
-
-    });
-}
-
-// Méthode de mise à jour des données de la vidéo associée à l'article
-SvpMetaboxManager.Save = function () {
-    jQuery(document).ready(function ($) {        
-        var data = {
-            action: "save_movie_to_post",
-            postid: SvpMetaboxManager.postID,
-            width: $("#svp_player_width").val(),
-            height: $("#svp_player_height").val(),
-            _ajax_nonce: SvpMetaboxManager._ajax_nonce_save_movie_to_post
-        };
-
-        jQuery.post(ajaxurl, data, function (response) {
-            var error = 0;
-
-            if (response == 0) // Erreur
-                error = 2;
-
-            if (response > 1)
-                error = response;
-
-            // Change le message avec un effet d'animation pour mettre en avant le changement
-            SvpMetaboxManager.Show(error, "options");
-        });
-
-    });
-}
-
-// Méthode de gestion du message
-// Param error integer numéro d'erreur
-// Param action string type de l'action
-SvpMetaboxManager.Show = function (error, action) {
-
-    jQuery(document).ready(function ($) {
-        var empty = false;
-
-        var msg = $("#svp-movie-current p").get(0);
-
-        if ($("#svp-selected-movie").val() == "") { // Pas de vidéo sélectionnée
-            $(msg).html(SvpMetaboxManager.messages[0]);
-            empty = true;
-        }
-        else if (error > 0) { // Error > 0, vidéo sélectionnée et erreur retournée
-            $(msg).html(SvpMetaboxManager.messages[error]);
-            if (error == 2)
-                $("#svp-selected-movie").val("");
-        }
-        else { // Error == 0, vidéo sélectionnée et pas d'erreur retournée
-            if (action != "options") { // Action de sélection d'une vidéo
-                var selected = "\u00ab\u00a0" + $("#svp-selected-movie").val() + "\u00a0\u00bb";
-                $(msg).html(SvpMetaboxManager.messages[1].replace("[movie]", selected));
-            }
-            else // Action de mise à jour des options
-                $(msg).html(SvpMetaboxManager.messages[4]);
-        }
-
-        // Animation pour indiquer un changement
-        var color = "#a4d3ef";
-        if (empty == true || error > 0) { // Erreur (fond rouge)
-            color = "#efa4ae";
-            if (action != "options") // Action de sélection d'une vidéo
-                $("#svp-movie-current-options").hide();
-        }
-        else // Réussite (fond bleu)
-            $("#svp-movie-current-options").show();
-
-        $(msg).animate({ backgroundColor: color }, 300);
-        $(msg).animate({ backgroundColor: "#ffffe0" }, 250);
-
-    });
-
-}
+		SVP_Metabox.Select = function (e) {
+			var $from = $(e.target);
+			if ($from.hasClass('svp-activated') == false) {
+				var current_video_id = this._get_current_video_id();
+				$('#svp-video').val(current_video_id);
+				$from.addClass('svp-activated');
+			}
+		}
+	}
+);

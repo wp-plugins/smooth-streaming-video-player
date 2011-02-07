@@ -1,175 +1,129 @@
 <?php
 /*
-Plugin Name: SVP
-Plugin URI: http://www.adenova.fr/svp-silverlight-plugin-wordpress/
-Description: A Smooth Streaming Video Player.
-Version: 1.4.2
+Plugin Name: Smooth Video Player
+Plugin URI: http://www.adenova.fr/smooth-video-player-plugin-wordpress/
+Description: A Smooth Streaming Video Player. Thanks to this plugin, you can add several sources of videos of different servers and associate them to your blog posts.
+Version: 1.5.0
 Author: Agence Adenova
 Author URI: http://www.adenova.fr
 */
 
-if (!class_exists("SVP_Silverlight"))
+if ( ! class_exists( 'SVP_Smooth_Video_Player' ) )
 {
-	// Définit quelques constantes
-	if (!defined("SVP_DB_VERSION"))
-		define("SVP_DB_VERSION", "1.0.0");
-	if (!defined("SVP_PLUGIN_VERSION"))
-		define("SVP_PLUGIN_VERSION", "1.4.2");
-	if (!defined("SVP_PLUGIN_CHANGE_VERSION"))
-		define("SVP_PLUGIN_CHANGE_VERSION", "1.4.2");
-	if (!defined("SVP_USER_AGENT_IPHONE"))
-		define("SVP_USER_AGENT_IPHONE", "IPHONE");
-	if (!defined("SVP_USER_AGENT_IPAD"))
-		define("SVP_USER_AGENT_IPAD", "IPAD");
-	if (!defined("SVP_USER_AGENT_OTHER"))
-		define("SVP_USER_AGENT_OTHER", "OTHER");
-		
+	// Defines some contants
+	if ( ! defined( 'SVP_DB_VERSION' ) )
+		define( 'SVP_DB_VERSION', '1.1.0' );
+	if ( ! defined( 'SVP_PLUGIN_VERSION' ) )
+		define( 'SVP_PLUGIN_VERSION', '1.5.0' );
+	if ( ! defined( 'SVP_USER_AGENT_IPHONE' ) )
+		define( 'SVP_USER_AGENT_IPHONE', 'IPHONE' );
+	if ( ! defined( 'SVP_USER_AGENT_IPAD' ) )
+		define( 'SVP_USER_AGENT_IPAD', 'IPAD' );
+	if ( ! defined( 'SVP_USER_AGENT_OTHER' ) )
+		define( 'SVP_USER_AGENT_OTHER', 'OTHER' );
+	if ( ! defined( 'SVP_VIDEO_EXT_SMOOTH' ) )
+		define( 'SVP_VIDEO_EXT_SMOOTH', 'ism' );
+	if ( ! defined( 'SVP_VIDEO_EXT_TS' ) )
+		define( 'SVP_VIDEO_EXT_TS', 'm3u8' );
+	if ( ! defined( 'SVP_VIDEO_SUFFIX_TS' ) )
+		define( 'SVP_VIDEO_SUFFIX_TS', 'm3u8-aapl' );
+	if ( ! defined( 'SVP_VIDEO_SUFFIX_THUMB' ) )
+		define( 'SVP_VIDEO_SUFFIX_THUMB', 'Thumb' );
+	if ( ! defined( 'SVP_VIDEO_EXT_THUMB' ) )
+		define( 'SVP_VIDEO_EXT_THUMB', 'jpg' );
+	
 	/**
-		* Ajout d'une fonction en charge de retourner le nom du répertoire courant
+		* Ajout d'une fonction en charge de retourner le nom du rÃ©pertoire courant
 		* du plugin.
 		*/
-	if (!function_exists('get_plugin_dirname'))
+	if ( ! function_exists( 'get_plugin_dirname' ) )
 	{
 		function get_plugin_dirname()
 		{
-			return str_replace('/' . basename(__FILE__), '', plugin_basename(__FILE__));
+			return str_replace( '/' . basename( __FILE__ ), '', plugin_basename( __FILE__ ) );
 		}
 	}
 	
-	/**
-	 * Ajout d'une fonction en charge d'assurer la suppression d'un répertoire non vide.
-	 */
-	if (!function_exists('rrmdir'))
-	{
-		function rrmdir($dir)
-		{
-			if (is_dir($dir))
-			{
-				$objects = scandir($dir); 
-				foreach ($objects as $object)
-				{ 
-					if ($object != "." && $object != "..")
-					{
-						if (filetype($dir . "/" . $object) == "dir")
-							rrmdir($dir . "/" . $object);
-						else
-							unlink($dir . "/" . $object);
-					}
-				}
-				reset($objects);
-				rmdir($dir);
-			}
-		}
-	}
+	// Add some includes
+	require_once( 'includes/class-utils.php' );
 	
-	include_once("includes/svp-utils.php");
-	
-	class SVP_Silverlight
+	class SVP_Smooth_Video_Player
 	{
-		// Propriétés
-		var $_admin_pages = array("svp-settings.php", "svp-about.php");
-		var $_post_pages = array("post.php", "post-new.php");
-		var $_authorized_params_keys = array("width", "height");
+		// PropriÃ©tÃ©s
+		var $_admin_pages = array( 'toplevel_page_svp-settings', 'svp_page_svp-about', 'svp_page_svp-source', 'admin_page_svp-delete-source', 'admin_page_svp-scan-source' );
+		var $_post_pages = array( 'post.php', 'post-new.php' );
+		var $_authorized_params_keys = array( 'width', 'height' );
 		var $_authorized_params_values = array();
 		var $_params_map = array(
-			"width" => "svp_player_width",
-			"height" => "svp_player_height"
-			); // Tableau de map des paramètres
+			'width' => 'svp_player_width',
+			'height' => 'svp_player_height'
+			); // Tableau de map des paramÃ¨tres
 		var $_unauthorized_params = array(
-			"svp_player_width", 
-			"svp_player_height"); // Liste des paramètres à ne pas passer au player
+			'svp_player_width', 
+			'svp_player_height' ); // Liste des paramÃ¨tres Ã  ne pas passer au player
 		
-		var $params = array(); // Paramètres du tag d'affichage de la vidéo
-		var $check = false; // Indique si le tag d'affichage de la vidéo est valide
-		var $browser = array("name" => null, "version" => null); // Informations sur le navigateur
+		var $params = array(); // ParamÃ¨tres du tag d'affichage de la vidÃ©o
+		var $check = false; // Indique si le tag d'affichage de la vidÃ©o est valide
+		var $browser = array( 'name' => null, 'version' => null ); // Informations sur le navigateur
 		
 		// Constructeur
-		function SVP_Silverlight()
+		function SVP_Smooth_Video_Player()
 		{
-			register_activation_hook(__FILE__, array(&$this, "install"));
-			register_deactivation_hook(__FILE__, array(&$this, "uninstall"));
+			$this->__construct();
+		}
+		
+		function __construct()
+		{
+			register_activation_hook( __FILE__, array( & $this, 'install' ) );
+			register_deactivation_hook( __FILE__, array( & $this, 'uninstall' ) );
 			
 			// Traduction
-			load_plugin_textdomain("svp-translate", false, dirname(plugin_basename(__FILE__)) . "/languages");
+			load_plugin_textdomain( 'svp-translate', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 			
 			// Appelle les hooks d'actions
 			$this->add_actions();
-			
-			// Modifie le contenu de la liste des pages d'administration (ajoute devant le chemin d'accès au répertoire du plugin)
-			array_walk($this->_admin_pages, array($this, 'addPluginDirname'));
-		}
-		
-		// Retourne le chemin absolu vers le plugin
-		function getAbsolutePathPlugin()
-		{
-			return realpath(dirname(__FILE__));
 		}
 		
 		// Getters et Setters
-		function setParam($key, $value)
+		function set_param( $key, $value )
 		{
 			$this->params[$key] = $value;
 		}
 		
-		function getParam($key)
+		function get_param( $key )
 		{
-			if (!array_key_exists($key, $this->params))
+			if ( ! array_key_exists( $key, $this->params ) )
 				return false;
 			return $this->params[$key];
 		}
 		
-		function setParams($values)
+		function set_params( $values )
 		{
-			$this->params = (array)$values;
+			$this->params = (array) $values;
 		}
 		
-		function getParams()
+		function get_params()
 		{
-			return (array)$this->params;
+			return (array) $this->params;
 		}
 		
-		function getParamMap($key)
+		function get_param_map( $key )
 		{
-			if (!array_key_exists($key, $this->_params_map))
+			if ( ! array_key_exists( $key, $this->_params_map ) )
 				return $key;
 			return $this->_params_map[$key];
 		}
 		
-		function getMappedParams()
+		function get_mapped_params()
 		{
-			if (count($this->getParams()) > 0)
+			if ( count( $this->get_params() ) > 0 )
 			{
 				$params = array();
-				foreach ($this->getParams() as $key => $value)
-					$params[$this->getParamMap($key)] = $value;
+				foreach ($this->get_params() as $key => $value)
+					$params[$this->get_param_map( $key )] = $value;
 				return $params;
 			}
 			return false;
-		}
-		
-		function setCheck($value)
-		{
-			$this->check = (bool)$value;
-		}
-		
-		function getCheck()
-		{
-			return (bool)$this->check;
-		}
-		
-		function setBrowser($value)
-		{
-			$this->browser = (array)$value;
-		}
-		
-		function getBrowser()
-		{
-			return (array)$this->browser;
-		}
-		
-		function addPluginDirname(&$item, $key)
-		{
-			$item = call_user_func('get_plugin_dirname') . '/' . $item;
 		}
 		
 		// Installation du plugin
@@ -178,14 +132,14 @@ if (!class_exists("SVP_Silverlight"))
 			// Ajoute les tables
 			$this->add_tables();
 			
-			// Ajoute ou met à jour les options de configurations du plugin
+			// Ajoute ou met Ã  jour les options de configurations du plugin
 			$this->add_options();
 			
-			// Supprime éventuellement l'ancien répertoire du plugin
-			$this->delete_old_plugin_directory();
+			// Ajoute les privilÃ¨ges pour l'administrateur
+			$this->add_roles();			
 		}
 		
-		// Désinstallation du plugin
+		// DÃ©sinstallation du plugin
 		function uninstall()
 		{
 			// Supprime les options de configuration du plugin
@@ -195,625 +149,531 @@ if (!class_exists("SVP_Silverlight"))
 			$this->delete_tables();
 		}
 		
-		// Ajout des tables à l'installation
+		// Ajout des tables Ã  l'installation
 		function add_tables()
 		{
 			global $wpdb;
 			
-			// Inclut les fichiers nécessaires à la création d'une table
-			if (@is_file(ABSPATH . '/wp-admin/includes/upgrade.php'))
-				include_once(ABSPATH . '/wp-admin/includes/upgrade.php');
-			elseif (@is_file(ABSPATH . '/wp-admin/upgrade-functions.php'))
-				include_once(ABSPATH . '/wp-admin/upgrade-functions.php');
+			// Inclut les fichiers nÃ©cessaires Ã  la crÃ©ation d'une table
+			if ( @is_file( ABSPATH . '/wp-admin/includes/upgrade.php' ) )
+				require_once( ABSPATH . '/wp-admin/includes/upgrade.php' );
+			elseif ( @is_file( ABSPATH . '/wp-admin/upgrade-functions.php' ) )
+				require_once( ABSPATH . '/wp-admin/upgrade-functions.php' );
 			else
-				wp_die(__("We have problem finding your &laquo;&nbsp;/wp-admin/upgrade.php&nbsp;&raquo;", "svp-translate"));
+				wp_die( __( 'We have problem finding your &laquo;&nbsp;/wp-admin/upgrade.php&nbsp;&raquo;', 'svp-translate' ) );
 			
-			$charset_collate = "";
-			if ($wpdb->supports_collation())
+			$charset_collate = '';
+			if ( $wpdb->supports_collation() )
 			{
-				if (!empty( $wpdb->charset))
-					$charset_collate = "DEFAULT CHARACTER SET " . $wpdb->charset . ";";
-				if (!empty($wpdb->collate))
-					$charset_collate .= " COLLATE " . $wpdb->collate . ";";
+				if ( ! empty( $wpdb->charset ) )
+					$charset_collate = 'DEFAULT CHARACTER SET ' . $wpdb->charset;
+				if ( ! empty( $wpdb->collate ) )
+					$charset_collate .= ' COLLATE ' . $wpdb->collate;
 			}
 			
-			// Ajoute la table contenant la liste des vidéos à associer aux articles
-			$files = $wpdb->prefix . "svpfiles";
-			$sql = "CREATE TABLE " . $files . " (
+			// Ajoute la table contenant la liste des vidÃ©os Ã  associer aux articles
+			$post_videos = $wpdb->prefix . 'svp_post_videos';
+			$sql = 'CREATE TABLE ' . $post_videos . ' (
 					post_ID INT NOT NULL,
-					filename VARCHAR(128) NOT NULL,
-					options VARCHAR(255) DEFAULT NULL,
-					PRIMARY KEY (post_ID)
-					)" . $charset_collate;
-			dbDelta($sql);
+					video_ID INT NOT NULL, 
+					PRIMARY KEY ( post_ID ), 
+					INDEX ( video_ID )
+					)' . $charset_collate . ';';
+			dbDelta( $sql );
+			
+			// Ajoute la table contenant la liste des vidÃ©os par source
+			$source_videos = $wpdb->prefix . 'svp_source_videos';
+			$sql = 'CREATE TABLE ' . $source_videos . ' (
+					ID INT NOT NULL AUTO_INCREMENT,
+					source_ID INT NOT NULL,
+					filename VARCHAR( 255 ) NOT NULL,
+					type VARCHAR( 32 ) NOT NULL,
+					PRIMARY KEY ( ID ), 
+					INDEX ( source_ID ), 
+					INDEX ( filename )
+					)' . $charset_collate . ';';
+			dbDelta( $sql );
+			
+			// Ajoute la table contenant la liste des sources ajoutÃ©es
+			$sources = $wpdb->prefix . 'svp_sources';
+			$sql = 'CREATE TABLE ' . $sources . ' (
+					ID INT NOT NULL AUTO_INCREMENT,
+					name VARCHAR( 64 ) DEFAULT NULL,
+					source_type_code VARCHAR( 32 ) NOT NULL, 
+					is_configured TINYINT( 4 ) NOT NULL DEFAULT 0,
+					is_scanned TINYINT( 4 ) NOT NULL DEFAULT 0,
+					options TEXT DEFAULT NULL,
+					PRIMARY KEY ( ID ), 
+					INDEX ( source_type_code )
+					)' . $charset_collate . ';';
+			dbDelta( $sql );
+			
+			// Ajoute la table contenant la liste des sources possibles
+			$types = $wpdb->prefix . 'svp_source_types';
+			$sql = 'CREATE TABLE ' . $types . ' (
+					code VARCHAR( 32 ) NOT NULL,
+					label VARCHAR( 64 ) NOT NULL,
+					PRIMARY KEY ( code )
+					)' . $charset_collate . ';';
+			dbDelta( $sql );
+			
+			// Ajoute les donnÃ©es dans la table des sources possibles
+			$wpdb->insert( $types, array( 'code' =>  'IIS-SMOOTH', 'label' => 'IIS Smooth Streaming' ) );
+			$wpdb->insert( $types, array( 'code' =>  'IIS-LIVE', 'label' => 'IIS Live' ) );
+			$wpdb->insert( $types, array( 'code' =>  'AZURE-SMOOTH', 'label' => 'Windows Azure&trade; Smooth Streaming' ) );
+			$wpdb->insert( $types, array( 'code' =>  'PROGRESSIVE', 'label' => 'Progressive download' ) );
+			$wpdb->insert( $types, array( 'code' =>  'AZURE-PROGRESSIVE', 'label' => 'Windows Azure&trade; progressive download' ) );
 		}
 		
-		// Suppression des tables à la désinstallation
+		// Suppression des tables Ã  la dÃ©sinstallation
 		function delete_tables()
 		{
 			global $wpdb;
-			$wpdb->query("DROP TABLE IF EXISTS " . $wpdb->prefix . "svpfiles");
-			$wpdb->query("DROP TABLE IF EXISTS " . $wpdb->prefix . "svpstats");
+			$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'svp_post_videos' );
+			$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'svp_sources' );
+			$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'svp_source_types' );
+			$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'svp_source_videos' );
 		}
 		
 		// Ajout des options de configuration
 		function add_options()
 		{
-			add_option("svp_db_version", SVP_DB_VERSION, null, "no");
-			add_option("svp_plugin_version", SVP_PLUGIN_VERSION, null, "no");
-			add_option("svp_movies_server_token", "34700ae2-7ff6-4fd6-ba79-713153a886c4", null, "no");
-			add_option("svp_movies_server_page", "movies.aspx", null, "no");
-			add_option(
-				"svp_settings", 
+			update_option( 'svp_db_version', SVP_DB_VERSION, null, 'no' );
+			update_option( 'svp_plugin_version', SVP_PLUGIN_VERSION, null, 'no' );
+			update_option(
+				'svp_settings', 
 				array(
-						"svp_movies_server_url" => "http://www.mymovies.tv/", 
-						"svp_movies_dirname" => "movies", 
-						"svp_player_width" => 400, 
-						"svp_player_height" => 300,
-						"svp_items_count" => 20),
-					null, "no");
+						'svp_player_width' => 400, 
+						'svp_player_height' => 300,
+						'svp_items_count' => 20),
+					null, 'no' );
 		}
 		
 		// Supprime les options de configuration
 		function delete_options()
 		{
-			delete_option("svp_db_version");
-			delete_option("svp_plugin_version");
-			delete_option("svp_movies_server_token");
-			delete_option("svp_movies_server_page");
-			delete_option("svp_settings");
+			delete_option( 'svp_settings' );
+		}
+		
+		// Ajoute les privilÃ¨ges pour l'adminstrateur
+		function add_roles()
+		{
+			$role = get_role( 'administrator' );
+			$role->add_cap( 'svp_add_source' );
+			$role->add_cap( 'svp_edit_source' );
+			$role->add_cap( 'svp_delete_source' );
+			$role->add_cap( 'svp_list_source' );
+			$role->add_cap( 'svp_update_settings' );
+		}
+		
+		// Supprime les privilÃ¨ges pour l'administrateur
+		function delete_roles()
+		{
+			$role = get_role( 'administrator' );
+			$role->remove_cap( 'svp_add_source' );
+			$role->remove_cap( 'svp_edit_source' );
+			$role->remove_cap( 'svp_delete_source' );
+			$role->remove_cap( 'svp_list_source' );
+			$role->remove_cap( 'svp_update_settings' );
 		}
 		
 		// Ajoute les hooks d'actions
 		function add_actions()
 		{
-			add_action("init", array(&$this, "initialize"));
-			add_action("admin_menu", array(&$this, "add_admin_menu"));
-			add_action("wp_ajax_get_movies", array(&$this, "get_movies"));
-			add_action("wp_ajax_add_movie_to_post", array(&$this, "add_movie_to_post"));
-			add_action("wp_ajax_save_movie_to_post", array(&$this, "save_movie_to_post"));
-			add_action("wp_ajax_delete_post_movie", array(&$this, "delete_post_movie"));
-			add_action("admin_enqueue_scripts", array(&$this, "load_admin_styles"));
-			add_action("wp_head", array(&$this, "add_head_js"));
-			add_action("edit_form_advanced", array(&$this, "add_movie_metabox"));
+			add_action( 'init', array( & $this, 'initialize' ) );
+			add_action( 'admin_init', array( & $this, 'admin_init' ) );
+			add_action( 'admin_menu', array( & $this, 'add_admin_menu' ) );
+			add_action( 'admin_enqueue_scripts', array( & $this, 'load_admin_scripts' ) );
+			add_action( 'admin_print_styles', array( & $this, 'load_admin_styles' ) );
+			add_action( 'edit_form_advanced', array( & $this, 'add_video_metabox' ) );
+			add_action( 'save_post', array( & $this, 'add_video_to_post' ) );
 		}
 		
-		// Supprime l'ancien répertoire du plugin (svp-silverlight)
-		function delete_old_plugin_directory()
-		{
-			// Version courante inférieure à la version 1.4.2
-			if (version_compare(get_option('svp_plugin_version', '1.0.0'), SVP_PLUGIN_CHANGE_VERSION) == -1)
-			{
-				// S'assure que le nouveau répertoire existe bien
-				if (file_exists(realpath(dirname(__FILE__) . '/../smooth-streaming-video-player')))
-				{
-					// Supprime l'ancien répertoire
-					if (is_dir(realpath(dirname(__FILE__) . '/../svp-silverlight')))
-						rrmdir(realpath(dirname(__FILE__) . '/../svp-silverlight'));
-				}
-			}
-		}
-		
-		// Ajoute l'appel au Media RSS
-		function add_feeds()
-		{
-			add_feed('svp-podcast', array($this, 'podcast'));
-		}
-		
-		// Initialise le plugin
+		/**
+		 * Initializes the plugin.
+		 * 
+		 * @since 1.0.0
+		 * @return void
+		 */
 		function initialize()
 		{
-			if (!defined("SVP_USER_AGENT"))
+			if ( ! defined( 'SVP_USER_AGENT' ) )
 			{
-				if (stristr($_SERVER["HTTP_USER_AGENT"], "iphone") !== false)
- 					define("SVP_USER_AGENT", SVP_USER_AGENT_IPHONE);
-				elseif (stristr($_SERVER["HTTP_USER_AGENT"], "ipad") !== false)
-					define("SVP_USER_AGENT", SVP_USER_AGENT_IPAD);
- 				else
- 					define("SVP_USER_AGENT", SVP_USER_AGENT_OTHER);
+				if ( stristr( $_SERVER['HTTP_USER_AGENT'], 'iphone' ) !== false)
+					define( 'SVP_USER_AGENT', SVP_USER_AGENT_IPHONE);
+				elseif ( stristr( $_SERVER['HTTP_USER_AGENT'], 'ipad' ) !== false)
+					define( 'SVP_USER_AGENT', SVP_USER_AGENT_IPAD);
+				else
+					define( 'SVP_USER_AGENT', SVP_USER_AGENT_OTHER);
 			}
 			
-			// Stocke la version de IE
-			$browser = array();
-			if (preg_match("/msie ([0-9\.])/i", $_SERVER["HTTP_USER_AGENT"], $matches) > 0)
-			{
-				$browser["name"] = "msie";
-				$browser["version"] = $matches[1];
-				$this->setBrowser($browser);
-			}
-			
-			// Appelle les hooks de feeds
+			// Calls the hook of feeds
 			$this->add_feeds();
 		}
 		
-		// Indique si le player doit être affiché pour l'article courant
-		function show_player_check()
+		/**
+		 * Register a CSS stylesheet when admin is initializing
+		 *
+		 * @since 1.5.0
+		 * @return void
+		 */
+		function admin_init()
 		{
-			global $wp_query;
-			include_once ("includes/svp-movies.php");
-			$svp_movies = new SVP_Movies();
-			if (($svp_movies->has_movie_file_entry(get_the_ID())
-				&& is_single()))
+			wp_register_style( 
+				'svp-admin',
+				plugins_url( get_plugin_dirname() . '/styles/svp-admin.css' ), 
+				array(), 
+				false, 
+				'screen' );
+			wp_register_script(
+				'silverlight',
+				plugins_url( get_plugin_dirname() . '/scripts/silverlight.js' ),
+				array(), 
+				'4.0.50401.0' );
+		}
+		
+		/**
+		 * Adds the call to Media RSS feed.
+		 * 
+		 * @since 1.2.0
+		 * @return void
+		 */
+		function add_feeds()
+		{
+			add_feed( 'svp-podcast', array( & $this, 'podcast' ) );
+		}
+		
+		/**
+		 * Indicates whether the player should be displayed for the current post.
+		 * 
+		 * @param int $id Post ID
+		 * @return bool
+		 */
+		function show_player_check( $id = null )
+		{
+			if ( empty( $id ) )
+			{
+				wp_die( __( 'Post ID is undefined.', 'svp-translate' ) );
+				exit();
+			}
+			require_once( 'includes/class-post.php' );
+			$svp_post = new SVP_Post();
+			$svp_post->read( $id );
+			if ( $svp_post->has_video_entry( $id ) == false )
+				return false;
+			$video_url = $svp_post->get_video_url();
+			if ( $svp_post->has_video_entry( $id ) && is_single() && ! empty( $video_url ) )
 				return true;
 			return false;
 		}
 		
-		// Ajoute une menu au sein de l'administration
+		// Ajoute un menu au sein de l'administration
 		function add_admin_menu()
 		{
-			if (function_exists("add_menu_page"))
-				add_menu_page(__("SVP", "svp-translate"), __("SVP", "svp-translate"), "manage_options", get_plugin_dirname() . "/svp-settings.php", "", plugins_url(get_plugin_dirname() . "/images/svp-settings.png"));
-			if (function_exists("add_submenu_page"))
+			if ( function_exists( 'add_menu_page' ) )
+				add_menu_page( 
+					__( 'SVP', 'svp-translate' ), 
+					__( 'SVP', 'svp-translate' ), 
+					'svp_update_settings', 
+					'svp-settings', 
+					'', 
+					plugins_url(get_plugin_dirname() . '/images/svp-settings.png' ) );
+			if ( function_exists( 'add_submenu_page' ) )
 			{
-				add_submenu_page(get_plugin_dirname() . "/svp-settings.php", __("SVP Settings", "svp-translate"), __("Settings", "svp-translate"), "manage_options", get_plugin_dirname() . "/svp-settings.php");
-				add_submenu_page(get_plugin_dirname() . "/svp-settings.php", __("SVP About", "svp-translate"), __("About", "svp-translate"), "manage_options", get_plugin_dirname() . "/svp-about.php");
+				add_submenu_page(
+					'svp-settings', 
+					__( 'SVP Settings', 'svp-translate' ), 
+					__( 'Settings', 'svp-translate' ), 
+					'svp_update_settings', 
+					'svp-settings', 
+					array( & $this, 'show_menu' ) );
+				add_submenu_page(
+					'svp-settings', 
+					__( 'SVP Source', 'svp-translate' ), 
+					__( 'Add source', 'svp-translate' ), 
+					'svp_add_source', 
+					'svp-source', 
+					array( & $this, 'show_menu' ) );
+				add_submenu_page(
+					'svp-settings', 
+					__( 'SVP About', 'svp-translate' ), 
+					__( 'About', 'svp-translate' ), 
+					'edit_posts', 
+					'svp-about', 
+					array( & $this, 'show_menu' ) );
+				add_submenu_page(
+					'admin', 
+					__( 'SVP Source Deletion', 'svp-translate' ), 
+					null, 
+					'svp_delete_source', 
+					'svp-delete-source', 
+					array( & $this, 'show_menu' ) );
+				add_submenu_page(
+					'admin', 
+					__( 'SVP Source Scanner', 'svp-translate' ), 
+					null, 
+					'svp_edit_source', 
+					'svp-scan-source', 
+					array( & $this, 'show_menu' ) );
 			}
 		}
 		
-		// Ajoute les CSS pour l'administration du plugin
-		function load_admin_styles($page)
+		// Affiche le menu et ses sous-menus
+		function show_menu()
 		{
-			// CSS pour les pages d'administration du plugin
-			if (in_array($page, $this->_admin_pages)
-				|| in_array($page, $this->_post_pages))
-				wp_enqueue_style("svp-admin", plugins_url(get_plugin_dirname() . "/styles/admin.css"), array(), false, "screen");
-			
-			// CSS et JS pour les pages d'ajout et d'édition d'un article
-			if (in_array($page, $this->_post_pages))
+			switch ( $_GET['page'] )
 			{
-				$browser = $this->getBrowser();
-				wp_enqueue_style("svp-post", plugins_url(get_plugin_dirname() . "/styles/post.css"), array(), false, "screen");
-				if ($browser["name"] == "msie" && $browser["version"] == 8)
-				{
-					wp_enqueue_style("svp-post-ie", plugins_url(get_plugin_dirname() . "/styles/post-ie.css"), array(), false, "screen");
-					global $wp_styles;
-					$wp_styles->add_data("svp-post-ie", "conditional", "gt IE 7");
-				}
-				if ($browser["name"] == "msie" && $browser["version"] == 7)
-				{
-					wp_enqueue_style("svp-post-ie7", plugins_url(get_plugin_dirname() . "/styles/post-ie7.css"), array(), false, "screen");
-					global $wp_styles;
-					$wp_styles->add_data("svp-post-ie7", "conditional", "lte IE 7");
-				}
-				wp_enqueue_script("jquery");
-				wp_enqueue_script("svp-metabox-js", plugins_url(get_plugin_dirname() . "/scripts/metabox.js"));
+				case 'svp-settings':
+					include_once( dirname( __FILE__ ) . '/svp-settings.php' );
+					break;
+				case 'svp-about':
+					include_once( dirname( __FILE__ ) . '/svp-about.php' );
+					break;
+				case 'svp-source':
+					include_once( dirname( __FILE__ ) . '/svp-source.php' );
+					break;
+				case 'svp-delete-source':
+					include_once( dirname( __FILE__ ) . '/svp-delete-source.php' );
+					break;
+				case 'svp-scan-source':
+					include_once( dirname( __FILE__ ) . '/svp-scan-source.php' );
+					break;
+				default:
+					include_once( dirname( __FILE__ ) . '/svp-about.php' );
+					break;
 			}
-			
-			// Styles et JS spécifiques
-			if (stristr($page, "settings") !== false)
-			{
-				wp_enqueue_script("jquery");
-			}
-		}
-		
-		// Ajoute le javascript dans le <head> des articles
-		function add_head_js()
-		{
-			if ($this->show_player_check()
-				&& $this->getUserAgent() == SVP_USER_AGENT_OTHER) // Uniquement pour Silverlight
-			{
-				?>
-				<script type="text/javascript">
-        function onSilverlightError(sender, args) {
-            var appSource = "";
-            if (sender != null && sender != 0) {
-              appSource = sender.getHost().Source;
-            }
-            
-            var errorType = args.ErrorType;
-            var iErrorCode = args.ErrorCode;
- 
-            if (errorType == "ImageError" || errorType == "MediaError") {
-              return;
-            }
- 
-            var errMsg = "Unhandled Error in Silverlight Application " +  appSource + "\n" ;
- 
-            errMsg += "Code: "+ iErrorCode + "    \n";
-            errMsg += "Category: " + errorType + "       \n";
-            errMsg += "Message: " + args.ErrorMessage + "     \n";
- 
-            if (errorType == "ParserError") {
-                errMsg += "File: " + args.xamlFile + "     \n";
-                errMsg += "Line: " + args.lineNumber + "     \n";
-                errMsg += "Position: " + args.charPosition + "     \n";
-            }
-            else if (errorType == "RuntimeError") {           
-                if (args.lineNumber != 0) {
-                    errMsg += "Line: " + args.lineNumber + "     \n";
-                    errMsg += "Position: " +  args.charPosition + "     \n";
-                }
-                errMsg += "MethodName: " + args.methodName + "     \n";
-            }
- 
-            throw new Error(errMsg);
-        }
-				</script>
-				<?php
-			}
-		}
-		
-		// AJAX: retourne la liste <ul> des vidéos disponibles sur le serveur
-		function get_movies()
-		{
-			// Vérifie l'autorisation d'accès (Ajax Nonce)
-			check_ajax_referer("svp-get-movies");
-			
-			// Récupère la liste des vidéos déposées sur le serveur de vidéos
-			include_once("includes/svp-movies.php");
-			$svp_movies = new SVP_Movies();
-			$data = $svp_movies->get_server_movies();
-			
-			// Vérifie si une erreur est retournée
-			$error = false;
-			if (is_array($data) && array_key_exists("error", $data))
-				$error = true;
-			
-			// Vérifie le nombre de vidéos retournées
-			// et récupère les données du XML
-			if ($error == false)
-			{
-				$xml = new SimpleXMLElement($data);
-				$result = $xml->xpath("/movies/@count");
-				$count = (int)$result[0]["count"];
-				$elements = $xml->xpath("//movie");
-			}
-			
-			// Effectue la sortie
-			header("Content-Type: text/plain");
-			
-			if ($error == true)
-			{
-				print '<li class="error"><span>' . $data["error"] . '</span></li>';
-				die;
-			}
-			
-			if ($count == 0)
-			{
-				print '<li class="error"><span>' . __("None movie found on the server", "svp-translate") . '</span></li>';
-				die;
-			}
-			
-			$output = "";
-			foreach ($elements as $element)
-			{	
-				if ($svp_movies->get_movie_file_entry((int)$_POST["postid"], SVP_USER_AGENT_OTHER) == (string)$element)
-					$output .= '<li class="selected"><span>' . (string)$element . '</span>';
-				else
-					$output .= '<li class="unselected"><span>' . (string)$element . '</span>';
-				
-				// Nombre d'articles attachés à la vidéo
-				$posts = $svp_movies->get_num_posts_by_movie((string)$element);
-				if ($posts > 0)
-					$output .= ' <span class="attached">' . sprintf(__("(attached to %u post(s))", "svp-translate"), $posts) . '</span>';
-				
-				$output	.= '</li>';
-			}
-			print $output;
-			die;
-		}
-		
-		// AJAX: associe une vidéo à un article
-		function add_movie_to_post()
-		{
-			// Vérifie l'autorisation d'accès (Ajax Nonce)
-			check_ajax_referer("svp-add-movie-to-post");
-			
-			include_once ("includes/svp-movies.php");
-			$svp_movies = new SVP_Movies();
-			$has_movie = $svp_movies->has_movie_file_entry((int)$_POST["postid"]);
-			
-			global $wpdb;
-			
-			// Effectue la sortie
-			header("Content-Type: text/plain");
-			if ($_POST["postid"])
-			{
-				if ($has_movie == false) // Ajout
-				{
-					if ($wpdb->insert(
-						$wpdb->prefix . "svpfiles", 
-						array("post_ID" => (int)$_POST["postid"], "filename" => (string)$_POST["filename"]),
-						array("%u", "%s")))
-						print 1;
-					else
-						print 3; // Erreur lors de l'insertion en base de données
-				}
-				else // Mise à jour
-				{
-					if ($wpdb->update(
-						$wpdb->prefix . "svpfiles", 
-						array("filename" => (string)$_POST["filename"]),
-						array("post_ID" => (int)$_POST["postid"]),
-						array("%s"),
-						array("%u")))
-						print 1;
-					else
-						print 3; // Erreur lors de l'insertion en base de données
-				}
-			}
-			else
-				print 0; // Identifiant non trouvé
-			die;
-		}
-		
-		// AJAX: supprime une vidéo associée à un article
-		function delete_post_movie()
-		{
-			// Vérifie l'autorisation d'accès (Ajax Nonce)
-			check_ajax_referer("svp-delete-post-movie");
-			
-			global $wpdb;
-			
-			// Effectue la sortie
-			header("Content-Type: text/plain");
-			if ($_POST["postid"])
-			{
-				if ($wpdb->query($wpdb->prepare("DELETE FROM " . $wpdb->prefix . "svpfiles WHERE post_ID = %u", (int)$_POST["postid"])))
-					print 1;
-				else
-					print 3; // Erreur lors de la suppression
-			}
-			else
-				print 0; // Identifiant non trouvé
-			die;
-		}
-		
-		// AJAX: met à jour les données vidéo d'un article
-		function save_movie_to_post()
-		{
-			// Vérifie l'autorisation d'accès (Ajax Nonce)
-			check_ajax_referer("svp-save-movie-to-post");
-			
-			include_once ("includes/svp-movies.php");
-			$svp_movies = new SVP_Movies();
-			
-			// Effectue la sortie
-			header("Content-Type: text/plain");
-			if ($_POST["postid"])
-			{
-				// Met à jour les données de la vidéo associée
-				$values = array(
-					"svp_player_width" => $_POST["width"],
-					"svp_player_height" => $_POST["height"]
-					);
-				
-				// Ne stocke que les données différentes de la configuration globale
-				$options = get_option("svp_settings");
-				$locale = array();
-				foreach ($values as $key => $value)
-				{
-					if ($values[$key] != $options[$key])
-						$locale[$key] = $value;
-				}
-				
-				if ($svp_movies->set_locale_options($_POST["postid"], $locale))
-					print 1;
-				else
-					print 3; // Erreur lors de l'insertion en base de données
-			}
-			else
-				print 0; // Identifiant non trouvé
-			die;
-		}
-		
-		// Retourne le User Agent courant
-		function getUserAgent()
-		{
-			if (!defined("SVP_USER_AGENT"))
-				define("SVP_USER_AGENT", SVP_USER_AGENT_OTHER);
-			return SVP_USER_AGENT;
-		}
-		
-		// Retourne l'URL complète d'accès aux vidéos
-		function getURLMovies()
-		{
-			$utils = new SVP_Utils();
-			return $utils->addEndUrlSlash($this->getOption("svp_movies_server_url") . $this->getOption("svp_movies_dirname"));
-		}
-		
-		// Retourne la largeur du player
-		function getWidth()
-		{
-			if (!$this->getParam($this->getParamMap("width")))
-				return $this->getOption($this->getParamMap("width"));
-			if (!$this->getParam($this->getParamMap("width")))
-				return "100%";
-			else
-				return $this->getParam($this->getParamMap("width"));
-		}
-		
-		// Retourne la hauteur du player
-		function getHeight()
-		{
-			if (!$this->getParam($this->getParamMap("height")))
-				return $this->getOption($this->getParamMap("height"));
-			if (!$this->getParam($this->getParamMap("height")))
-				return "100%";
-			else
-				return $this->getParam($this->getParamMap("height"));
-		}
-		
-		// Récupère une option de configuration
-		function getOption($key)
-		{
-			$options = get_option("svp_settings");
-			if (array_key_exists($key, $options))
-				return $options[$key];
-			return false;
 		}
 		
 		/**
--		 * Retourne le code source HTML des paramètres locaux du player Silverlight.
--		 *
--		 * @param array $values Liste des paramètres à passer en initParams au player Silverlight
--		 * @param int $id Identifiant de l'article
--		 * @return string Code source généré
--		 *
--		 */
-		function getSilverlightParams($values = array(), $id)
+		 * Adds CSS styles for the plugin administration space.
+		 * 
+		 * @since 1.0.0
+		 * @return void
+		 */
+		function load_admin_styles()
 		{
-			include_once ("includes/svp-movies.php");
-			$svp_movies = new SVP_Movies();
-			
-			// Paramètres obligatoires (nom du fichier de la vidéo et url absolue d'accès à la vidéo)
-			$params .= "mediaurl=" . $this->getURLMovies() . $svp_movies->get_movie_file_entry($id, SVP_USER_AGENT_OTHER) . "/manifest";
-			
-			if (count($values) > 0 || $values = $this->getMappedParams())
+			wp_enqueue_style( 'svp-admin' );
+		}
+		
+		/**
+		 * Adds JS for the plugin administration space.
+		 * 
+		 * @since 1.5.0
+		 * @return void
+		 */
+		function load_admin_scripts( $page )
+		{
+			if ( in_array( $page, $this->_post_pages) || stristr( $page, 'settings' ) !== false )
 			{
-				if (!is_array($values))
-					return "";
-				foreach ($values as $key => $value)
-				{
-					if (!in_array($key, $this->_unauthorized_params))
-						$params .= "," . $key . '=' . trim($value);
-				}
+				wp_enqueue_script( 'jquery' );
+				wp_enqueue_script( 'silverlight' );
+				wp_enqueue_script( 
+					'svp-lightbox-me',
+					plugins_url( get_plugin_dirname() . '/scripts/jquery.lightbox_me.js' ),
+					array( 'jquery' ), 
+					'2.2' );
+				wp_enqueue_script( 
+					'svp-metabox',
+					plugins_url( get_plugin_dirname() . '/scripts/svp-metabox.js' ),
+					array( 'jquery', 'svp-lightbox-me', 'silverlight' ), 
+					'1.0' );
 			}
+		}
+		
+		/**
+		 * Retourne le code source HTML du paramÃ¨tre InitParams du player Silverlight.
+		 *
+		 * @param int $id Identifiant de l'article
+		 * @return string Code source des paramÃ¨tres
+		 */
+		function get_silverlight_params( $id )
+		{
+			// Add some includes
+			require_once( 'includes/class-post.php' );
+			
+			$svp_post = new SVP_Post();
+			$svp_post->read( $id );
+			
+			// Adds video URL
+			$params = 'MediaUrl=' . $svp_post->get_video_url();
+			
+			// Adds thumbnail URL
+			$thumbnail = $svp_post->get_thumbnail_url();
+			if ( ! empty( $thumbnail ) )
+				$params .= ',ThumbnailUrl=' . $thumbnail;
+			
+			$delivery_method = 'ProgressiveDownload';
+			if ( $svp_post->get_video()->get_type() == SVP_VIDEO_TYPE_ADAPTIVE || $svp_post->get_video()->get_type() == SVP_VIDEO_TYPE_LIVE )
+				$delivery_method = 'AdaptiveStreaming';
+			$params .= ',DeliveryMethod=' . $delivery_method;
 			return $params;
 		}
 		
-		// Ajoute la zone d'ajout d'une vidéo dans le formulaire d'édition d'un article
-		function add_movie_metabox()
+		// Ajoute la zone d'ajout d'une vidÃ©o dans le formulaire d'Ã©dition d'un article
+		function add_video_metabox()
 		{
-			add_meta_box("svpsmoothvideodiv", __("Smooth Streaming Movie", "svp-translate"), array(&$this, "show_movie_metabox"), "post", "advanced", "high");
+			add_meta_box( 
+				'smoothvideoplayerdiv', 
+				__( 'Smooth Streaming Video Player &#8212; Choose your video', 'svp-translate' ), 
+				array( & $this, 'show_metabox' ), 
+				'post', 
+				'advanced', 
+				'high' );
 		}
 		
 		// Retourne le contenu du SVP meta box
-		function show_movie_metabox()
+		function show_metabox()
 		{
-			include_once("svp-movie-metabox.php");
+			require_once( 'svp-metabox.php' );
 		}
 		
+		/**
+		 * Adds a video to a post when a post is saved.
+		 *
+		 * @since 1.5.0
+		 * @param int $id Post ID
+		 * @return void
+		 */
+		function add_video_to_post( $post_ID )
+		{
+			if ( isset( $_POST ) && wp_is_post_revision( $post_ID ) == false )
+			{
+				if ( array_key_exists( 'svp_video', $_POST ) )
+				{
+					require_once( 'includes/class-post.php' );
+					$data = array( 'post_ID' => (int) $post_ID, 'video_ID' => (int) $_POST['svp_video'] );
+					$svp_post = new SVP_Post();
+					$svp_post->attach_video( $data );
+				}
+			}
+		}
+		
+		/**
+		 * Calls the RSS generation file.
+		 *
+		 * @since 1.2.0
+		 * @return void
+		 */
 		function podcast() { 
-			load_template(ABSPATH . PLUGINDIR . '/' . get_plugin_dirname() . '/svp-mrss.php');
+			load_template( ABSPATH . PLUGINDIR . '/' . get_plugin_dirname() . '/svp-mrss.php' );
 		}
 	}
 }
 
 // Initialise le plugin
-if (class_exists("SVP_Silverlight"))
+if (class_exists( 'SVP_Smooth_Video_Player' ) )
 {
-	if (!isset($svp_plugin))
-		$svp_plugin = new SVP_Silverlight();
+	if ( ! isset( $svp_plugin ) )
+		$svp_plugin = new SVP_Smooth_Video_Player();
 }
 
 /**
- * Implémentation d'un Template Tag retournant le code source HTML permettant l'affichage
- * d'une vidéo en smooth streaming Silverlight ou iPhone.
+ * Implementation of a Template Tag returning the HTML source code for a video display.
  * 
- * @param $width string Surcharge la largeur du player (Ex: 100px ou 100%)
- * @param $height string Surcharge la hauteur du player (Ex: 100px ou 100%)
- * @param $comments bool Indique s'il faut afficher les commentaires de tag dans le source HTML
- * @param $container bool Indique s'il faut envelopper le player d'un conteneur dans le source HTML
- * @param $before string Code source HTML à ajouter avant le player
- * @param $after string Code source HTML à ajouter après le player
- * @return string Code source HTML généré
+ * @since 1.0.0
+ * @package SVP_Smooth_Video_Player
+ * @param $width string Override the width of the player (use these type of values: 100px, 100%)
+ * @param $height string Override the height of the player (use these type of values: 100px, 100%)
+ * @param $comments bool Indicates whether to display the comment tags in the HTML source
+ * @param $container bool Indicates whether to wrap the player of a container in the source HTML
+ * @param $before string Customized HTML to add before the player source code
+ * @param $after string Customized HTML to add after the player source code
+ * @return string Generated HTML source code
  */
-
-if (!function_exists("the_smooth_video_player") && $svp_plugin instanceof SVP_Silverlight)
+if ( ! function_exists( 'the_smooth_video_player' ) && $svp_plugin instanceof SVP_Smooth_Video_Player )
 {
-	function the_smooth_video_player($width = "", $height = "", $comments = true, $container = true, $before = "", $after = "")
+	function the_smooth_video_player( $width = '', $height = '', $comments = true, $container = true, $before = '', $after = '' )
 	{
-		global $svp_plugin, $wpdb, $wp_query;
+		global $svp_plugin;
 		
-		$show = false; // Indique si un player est affiché
+		$show = false; // Indique si un player est affichÃ©
 		
-		$html = "";
+		$html = '';
 		
-		if ($comments)
-			$html .= "<!-- Smooth Video Player Template Tag Start -->" . "\n";
+		if ( $comments )
+			$html .= '<!-- Smooth Video Player Template Tag Start -->' . "\n";
 		
-		if (!empty($before))
+		if ( ! empty( $before ) )
 			$html .= $before . "\n";
 		
-		include_once("includes/svp-movies.php");
-		$svp_movies = new SVP_Movies();
+		// Add some includes
+		require_once( 'includes/class-videos.php' );
+		require_once( 'includes/class-post.php' );
+		$svp_videos = new SVP_Videos();
+		$svp_post = new SVP_Post();
 		
-		// Récupère l'identifiant courant ou celui du dernier article publié possédant une vidéo
+		// RÃ©cupÃ¨re l'identifiant courant
 		$id = get_the_ID();
-		if ($id == 0)
-			$id = $svp_movies->get_lastupdated_movie_post_id();
 		
-		if (is_null($id)) // Retourne un code source vide si aucun identfiant n'a été trouvé
-			return "";
+		if ( is_null( $id ) ) // Retourne un code source vide si aucun identfiant n'a Ã©tÃ© trouvÃ©
+			return '';
 		
-		// Récupère les options par défaut
-		$options = get_option("svp_settings");
+		// RÃ©cupÃ¨re les donnÃ©es de l'article courant
+		$svp_post->read( $id );
 		
-		// Récupère les informations de la vidéo
-		if ($svp_movies->has_movie_file_entry($id))
+		// RÃ©cupÃ¨re les options par dÃ©faut
+		$options = get_option( 'svp_settings' );
+		
+		// RÃ©cupÃ¨re les informations de la vidÃ©o
+		if ( $svp_plugin->show_player_check( $id ) )
 		{
-			// Début du conteneur
-			if ($container)
+			// DÃ©but du conteneur
+			if ( $container )
 				$html .= '<div class="svp-player-container" id="svp-player-container-post-' . $id . '">';
 			
-			// Fusionne les options de configuration locale et globale
-			$options = array_merge($options, $svp_movies->get_locale_options($id));
-			
-			// Prépare les dimensions du player
-			(!empty($width)) ? $player_width = $width : $player_width = $options["svp_player_width"];
-			(!empty($height)) ? $player_height = $height : $player_height = $options["svp_player_height"];
+			// PrÃ©pare les dimensions du player
+			( ! empty( $width ) ) ? $player_width = $width : $player_width = $options['svp_player_width'];
+			( ! empty( $height ) ) ? $player_height = $height : $player_height = $options['svp_player_height'];
 			
 			// Construit le code HTML
-			$user_agent = $svp_plugin->getUserAgent();
-			switch ($user_agent)
+			$svp_utils = new SVP_Utils();
+			$user_agent = $svp_utils->get_user_agent();
+			switch ( $user_agent )
 			{
 				case SVP_USER_AGENT_IPAD: // iPad
 				case SVP_USER_AGENT_IPHONE: // iPhone
-					$html .= '<video src="' . $svp_plugin->getURLMovies() .
-						SVP_Movies::SVP_VIDEOS_DIRECTORY_IPHONE . "/";
-					if ($user_agent == SVP_USER_AGENT_IPAD)
-						$html .= $svp_movies->get_movie_file_entry($id, SVP_USER_AGENT_IPAD);
-					if ($user_agent == SVP_USER_AGENT_IPHONE)
-						$html .= $svp_movies->get_movie_file_entry($id, SVP_USER_AGENT_IPHONE);
-					$html .= '" controls';
-					// Ajoute la vignette
-					$thumb = $svp_movies->get_movie_thumb($id, $svp_plugin->getURLMovies());
-					if (!empty($thumb))
-						$html .= ' poster="' . $thumb . '"';
-					$html .= ' width="' . $player_width . '" height="' . $player_height . '"></video>';
+					$html .= '<video src="' . $svp_post->get_video_url() . '" controls poster="' . $svp_post->get_thumbnail_url() . '" width="' . $player_width . '" height="' . $player_height . '">';
+					$html .= '</video>';
 					break;
 				default: // Silverlight
 					$html .= '<div id="silverlightControlHost">';
 					$html .= '<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="' . $player_width . '" height="' . $player_height . '">';
-					$html .= '<param name="source" value="' . plugins_url('/player/Player.xap', __FILE__) . '"/>';
+					$html .= '<param name="source" value="' . plugins_url( '/player/Player.xap', __FILE__ ) . '"/>';
 					$html .= '<param name="onError" value="onSilverlightError" />';
 					$html .= '<param name="background" value="transparent" />';
 					$html .= '<param name="windowless" value="true" />';
 					$html .= '<param name="minRuntimeVersion" value="4.0.50401.0" />';
 					$html .= '<param name="autoUpgrade" value="true" />';
-					if ($params = $svp_plugin->getSilverlightParams($svp_movies->get_locale_options($id), $id)) 
-						$html .= '<param name="InitParams" value="' . $params . '" />';
+					$html .= '<param name="InitParams" value="' . $svp_plugin->get_silverlight_params( $id ) . '" />';
 					$html .= '<a href="http://go.microsoft.com/fwlink/?LinkID=149156&v=4.0.50401.0" style="text-decoration:none">';
- 					$html .= '<img src="http://go.microsoft.com/fwlink/?LinkId=161376" alt="Get Microsoft Silverlight" style="border-style:none"/>';
+					$html .= '<img src="http://go.microsoft.com/fwlink/?LinkId=161376" alt="Get Microsoft Silverlight" style="border-style:none"/>';
 					$html .= '</a>';
 					$html .= '</object>';
-					$html .= '<iframe id="_sl_historyFrame" style="visibility:hidden;height:0px;width:0px;border:0px"></iframe>';
+					$html .= '<iframe id="_sl_historyFrame" style="visibility: hidden; height: 0px; width: 0px; border: 0px"></iframe>';
 					$html .= '</div>';
 					break;
 			}
 			
 			// Fin du conteneur
-			if ($container)
+			if ( $container )
 				$html .= '</div>';
 			
 			$show = true;
 		}
 		
 		// Affiche le code HTML
-		
 		$html .= "\n";
 		
-		if (!empty($after))
+		if ( ! empty( $after ) )
 			$html .= $after . "\n";
 		
-		if ($comments)
-			$html .= "<!-- Smooth Video Player Template Tag End -->" . "\n";
+		if ( $comments )
+			$html .= '<!-- Smooth Video Player Template Tag End -->' . "\n";
 		
 		print $html;
 		
-		// Excécute le hook d'action seulement si un player doit être affiché
-		if ($show == true)
-			do_action("show_smooth_video_player", $id);
+		// ExcÃ©cute le hook d'action seulement si un player doit Ãªtre affichÃ©
+		if ( $show == true )
+			do_action( 'show_smooth_video_player', $id );
 	}
 }

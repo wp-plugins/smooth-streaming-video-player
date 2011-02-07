@@ -406,7 +406,7 @@ jQuery.extend({
 		readyBound = true;
 
 		// Catch cases where $(document).ready() is called after the
-		// browser event has already occurred.
+		// browser event has already occured.
 		if ( document.readyState === "complete" ) {
 			return jQuery.ready();
 		}
