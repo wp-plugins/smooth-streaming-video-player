@@ -1,0 +1,12 @@
+#svp_player_width,
+#svp_player_height
+{
+    line-height: 14px;
+    position: relative;
+    top: 1px;
+}
+
+#svp-movies-list ul
+{
+	max-height: 452px;
+}
