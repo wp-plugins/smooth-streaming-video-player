@@ -204,11 +204,9 @@ jQuery(document).ready(
 		SVP_Metabox.Select = function (e) {
 			var $from = $(e.target);
 			if ($from.hasClass('svp-activated') == false) {
-				if ($('#svp-player-container').is(':hidden') == false) {
-					$('a.svp-select').removeClass('svp-activated');
-					var $target = SVP_Metabox._params.target;
-					$target.parent('span.svp-action').children('a.svp-select').addClass('svp-activated');
-				}
+				$('a.svp-select').removeClass('svp-activated');
+				var $target = SVP_Metabox._params.target;
+				$target.parent('span.svp-action').children('a.svp-select').addClass('svp-activated');
 				var current_video_id = this._get_current_video_id();
 				$('#svp-video').val(current_video_id);
 				$from.addClass('svp-activated');
