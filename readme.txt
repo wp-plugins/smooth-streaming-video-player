@@ -6,7 +6,7 @@ Tested up to: 3.0.4
 Stable tag: 1.5.0
 License: GPLv2
 
-This plugin allow you to play some adaptive streaming (with Smooth Streaming in live mode or not) and progressive download videos linked to your posts blog.
+This plugin allow you to play some Smooth Streaming (in Live mode or not) and progressive download videos linked to your posts blog.
 
 == Description ==
 
