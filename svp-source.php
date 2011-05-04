@@ -60,6 +60,7 @@ if ( $_POST['svp_source_valid'] && ! empty( $class ) && ! empty( $params['ID'] )
 					$options[$key] = $value;
 			}
 		}
+		
 		if ( $class->check( $_POST ) )
 		{
 			$class->save( 
