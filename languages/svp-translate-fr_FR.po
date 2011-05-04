@@ -1,0 +1,948 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: SVP Plugin for WordPress\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-05-03 11:27+0100\n"
+"PO-Revision-Date: 2011-05-03 12:13+0100\n"
+"Last-Translator: Agence Adenova <agence@adenova.fr>\n"
+"Language-Team: Adenova <agence@adenova.fr>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-Basepath: J:\\work\\SmoothStreamingVideoPlayer\\WordPress.Plugin\\wp-content\\plugins\n"
+"X-Poedit-Language: French\n"
+"X-Poedit-Country: FRANCE\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: smooth-streaming-video-player\n"
+
+#: smooth-streaming-video-player/svp-about.php:5
+#: smooth-streaming-video-player/svp-delete-source.php:5
+#: smooth-streaming-video-player/svp-scan-source.php:6
+#: smooth-streaming-video-player/svp-settings.php:5
+#: smooth-streaming-video-player/svp-source.php:5
+msgid "Cheatin&#8217; uh?"
+msgstr "On essaie de tricher ?"
+
+#: smooth-streaming-video-player/svp-about.php:7
+#: smooth-streaming-video-player/svp-delete-source.php:7
+#: smooth-streaming-video-player/svp-scan-source.php:11
+#: smooth-streaming-video-player/svp-settings.php:7
+#: smooth-streaming-video-player/svp-source.php:7
+msgid "You do not have sufficient permissions to access this page."
+msgstr "Vous ne possédez pas les privilèges suffisants pour accéder à cette page."
+
+#: smooth-streaming-video-player/svp-about.php:16
+#: smooth-streaming-video-player/svp-silverlight.php:400
+msgid "About"
+msgstr "A propos"
+
+#: smooth-streaming-video-player/svp-about.php:17
+#, php-format
+msgid "Le plugin SVP (Smooth Streaming Video Player) a été développé par l'agence <a href='%s'>Adenova</a>."
+msgstr "Le plugin SVP (Smooth Streaming Video Player) a été développé par l'agence <a href='%s'>Adenova</a>."
+
+#: smooth-streaming-video-player/svp-about.php:19
+msgid "Il permet la lecture de vidéos encodées en Smooth Streaming avec Silverlight sur un PC ou un Mac et avec le tag HTML 5 &lt;video&gt; sur iPhone et iPad."
+msgstr "Il permet la lecture de vidéos encodées en Smooth Streaming avec Silverlight sur un PC ou un Mac et avec le tag HTML 5 &lt;video&gt; sur iPhone et iPad."
+
+#: smooth-streaming-video-player/svp-about.php:20
+msgid "La première version est sortie en juin 2010."
+msgstr "La première version est sortie en juin 2010."
+
+#: smooth-streaming-video-player/svp-about.php:21
+#, php-format
+msgid "Vous pouvez consulter <a href='%s'>la page consacrée</a> à ce plugin sur le site d'Adenova."
+msgstr "Vous pouvez consulter <a href='%s'>la page consacrée</a> à ce plugin sur le site d'Adenova."
+
+#: smooth-streaming-video-player/svp-about.php:22
+msgid "Ce plugin a été réalisé en collaboration avec le <a href='http://www.microsoft.com/france/apropos/microsoft-technology-center/'>MTC Paris</a> (Microsoft Technology Center Paris) dans le cadre d'un projet d'implémentation d'un player Silverlight de vidéos lues en Smooth Streaming."
+msgstr "Ce plugin a été réalisé en collaboration avec le <a href='http://www.microsoft.com/france/apropos/microsoft-technology-center/'>MTC Paris</a> (Microsoft Technology Center Paris) dans le cadre d'un projet d'implémentation d'un player Silverlight de vidéos lues en Smooth Streaming."
+
+#: smooth-streaming-video-player/svp-delete-source.php:24
+#: smooth-streaming-video-player/svp-scan-source.php:30
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:132
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:155
+#: smooth-streaming-video-player/includes/class-source-base.php:198
+#: smooth-streaming-video-player/includes/class-source-base.php:269
+#: smooth-streaming-video-player/includes/class-source-base.php:327
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:152
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:152
+#: smooth-streaming-video-player/includes/class-source-progressive.php:129
+#: smooth-streaming-video-player/includes/class-source-rce.php:119
+msgid "Parameter ID is undefined."
+msgstr "Le paramètre ID est indéfini."
+
+#: smooth-streaming-video-player/svp-delete-source.php:29
+#: smooth-streaming-video-player/svp-scan-source.php:35
+msgid "Parameter type is undefined."
+msgstr "Le paramètre type est indéfini."
+
+#: smooth-streaming-video-player/svp-delete-source.php:55
+#: smooth-streaming-video-player/svp-scan-source.php:52
+msgid "This source of videos is undefined or does not exist."
+msgstr "La source des vidéos est indéfinie ou n'existe pas."
+
+#: smooth-streaming-video-player/svp-delete-source.php:65
+#, php-format
+msgid "Delete source &laquo;&nbsp;%s&nbsp;&raquo;"
+msgstr "Supprimer la source &laquo;&nbsp;%s&nbsp;&raquo;"
+
+#: smooth-streaming-video-player/svp-delete-source.php:66
+#, php-format
+msgid "ID&nbsp;#%d&nbsp;: %s"
+msgstr "ID&nbsp;#%d&nbsp;: %s"
+
+#: smooth-streaming-video-player/svp-delete-source.php:70
+msgid "Delete source"
+msgstr "Supprimer la source"
+
+#: smooth-streaming-video-player/svp-delete-source.php:71
+#, php-format
+msgid "ID&nbsp;#%d"
+msgstr "ID&nbsp;#%d"
+
+#: smooth-streaming-video-player/svp-delete-source.php:86
+#: smooth-streaming-video-player/svp-scan-source.php:82
+#: smooth-streaming-video-player/svp-source.php:139
+msgid "&larr; Back to Settings"
+msgstr "&larr; Retour aux paramètres"
+
+#: smooth-streaming-video-player/svp-delete-source.php:87
+msgid "You have specified this source for deletion&nbsp;:"
+msgstr "Vous avez choisi de supprimer cette source&nbsp;:"
+
+#: smooth-streaming-video-player/svp-delete-source.php:90
+msgid "Note that the following data will be removed&nbsp:"
+msgstr "Veuillez noter que les données suivantes vont être supprimées&nbsp;:"
+
+#: smooth-streaming-video-player/svp-delete-source.php:92
+#, php-format
+msgid "<strong>%d</strong> video(s) associated with the source"
+msgstr "<strong>%d</strong> vidéo(s) associées avec la source"
+
+#: smooth-streaming-video-player/svp-delete-source.php:93
+#, php-format
+msgid "<strong>%d</strong> source video(s) associated to posts"
+msgstr "<strong>%d</strong> vidéo(s) de la source associées à des articles"
+
+#: smooth-streaming-video-player/svp-delete-source.php:98
+msgid "Confirm deletion"
+msgstr "Confirmer la suppression"
+
+#: smooth-streaming-video-player/svp-metabox.php:53
+msgid "Play this video"
+msgstr "Lire cette vidéo"
+
+#: smooth-streaming-video-player/svp-metabox.php:53
+msgid "Play"
+msgstr "Lire"
+
+#: smooth-streaming-video-player/svp-metabox.php:59
+#: smooth-streaming-video-player/svp-metabox.php:82
+msgid "Select this video"
+msgstr "Sélectionner cette vidéo"
+
+#: smooth-streaming-video-player/svp-metabox.php:59
+msgid "Select"
+msgstr "Sélectionner"
+
+#: smooth-streaming-video-player/svp-metabox.php:79
+msgid "Close"
+msgstr "Fermer"
+
+#: smooth-streaming-video-player/svp-metabox.php:80
+msgid "Go to next video"
+msgstr "Aller à la vidéo suivante"
+
+#: smooth-streaming-video-player/svp-metabox.php:81
+msgid "Go to previous video"
+msgstr "Aller à la vidéo précédente"
+
+#: smooth-streaming-video-player/svp-metabox.php:90
+#, php-format
+msgid "No video is currently available. Please <a href=\"%s\">add at least one source of videos</a>. Nor forget to scan your sources of videos."
+msgstr "Aucune vidéo n'est actuellement disponible. Veuillez <a href=\"%s\">ajouter au moins une source de vidéos</a>. N'oubliez pas non plus de scanner vos sources de vidéos."
+
+#: smooth-streaming-video-player/svp-scan-source.php:59
+msgid "Launch scan"
+msgstr "Lancer le scan"
+
+#: smooth-streaming-video-player/svp-scan-source.php:65
+msgid "Relaunch scan"
+msgstr "Relancer le scan"
+
+#: smooth-streaming-video-player/svp-scan-source.php:77
+#, php-format
+msgid "Scan source &laquo;&nbsp;%s&nbsp;&raquo;"
+msgstr "Scanner la source &laquo;&nbsp;%s&nbsp;&raquo;"
+
+#: smooth-streaming-video-player/svp-scan-source.php:84
+msgid "To get and save in database the videos stocked on your source of videos, click on &laquo;&nbsp;Launch scan&nbsp;&raquo; button."
+msgstr "Pour obtenir et enregistrer les vidéos stockées dans votre source de vidéos au sein de la base de données, cliquer sur le bouton &laquo;&nbsp;Lancer le scan&nbsp;&raquo;."
+
+#: smooth-streaming-video-player/svp-scan-source.php:86
+msgid "The following videos are currently linked to your source :"
+msgstr "Les vidéos suivantes sont actuellement liées à votre source :"
+
+#: smooth-streaming-video-player/svp-scan-source.php:95
+#, php-format
+msgid "We have found this (these) <strong>%d video(s)</strong> to add on your source of videos :"
+msgstr "Nous avons trouvé cette (ces) <strong>%d vidéo(s)</strong> à ajouter à votre source de vidéos :"
+
+#: smooth-streaming-video-player/svp-scan-source.php:103
+#, php-format
+msgid "We have found this (these) <strong>%d video(s)</strong> to delete from your source of videos :"
+msgstr "Nous avons trouvé cette (ces) <strong>%d vidéo(s)</strong> à supprimer de votre source de vidéos :"
+
+#: smooth-streaming-video-player/svp-scan-source.php:111
+#, php-format
+msgid "This (these) following <strong>%d video(s)</strong> are unchanged :"
+msgstr "Cette (ces) <strong>%d vidéo(s)</strong> qui suivent sont inchangées :"
+
+#: smooth-streaming-video-player/svp-scan-source.php:118
+msgid "This (these) video(s) has (have) been correctly updated in database, but if you want, you can relaunch a new scan clicking on &laquo;&nbsp;Relaunch scan&nbsp;&raquo; button."
+msgstr "Cette (ces) vidéo(s) a (ont) été correctement mise(s) à jour dans la base de données, masi si vous le souhaitez, vous pouvez relancer un nouveau scan en cliquant sur le bouton &laquo;&nbsp;Relancer le scan&nbsp;&raquo;."
+
+#: smooth-streaming-video-player/svp-scan-source.php:120
+msgid "<strong>No video</strong> found on this source of videos."
+msgstr "<strong>Aucune vidéo</strong> trouvée sur cette source de vidéos."
+
+#: smooth-streaming-video-player/svp-scan-source.php:121
+msgid "Check your source settings, add some videos on your source and relaunch a scan here."
+msgstr "Vérifiez les paramètres de la source, ajoutez-y des vidéos et relancer un scan ici."
+
+#: smooth-streaming-video-player/svp-settings.php:40
+msgid "Settings have been correctly updated."
+msgstr "Les paramètres de configuration ont correctement été mis à jour."
+
+#: smooth-streaming-video-player/svp-settings.php:45
+#: smooth-streaming-video-player/svp-source.php:89
+msgid "A security error occured."
+msgstr "Une erreur de sécurité a eu lieu."
+
+#: smooth-streaming-video-player/svp-settings.php:56
+#: smooth-streaming-video-player/svp-silverlight.php:386
+msgid "Settings"
+msgstr "Paramètres"
+
+#: smooth-streaming-video-player/svp-settings.php:62
+msgid "Main parameters"
+msgstr "Paramètres généraux"
+
+#: smooth-streaming-video-player/svp-settings.php:68
+msgid "Default player style"
+msgstr "Style par défaut du lecteur"
+
+#: smooth-streaming-video-player/svp-settings.php:72
+msgid "Player width"
+msgstr "Largeur du lecteur"
+
+#: smooth-streaming-video-player/svp-settings.php:76
+msgid "Player height"
+msgstr "Hauteur du lecteur"
+
+#: smooth-streaming-video-player/svp-settings.php:85
+msgid "Media RSS publication"
+msgstr "Publication du Media RSS"
+
+#: smooth-streaming-video-player/svp-settings.php:89
+msgid "Items count"
+msgstr "Nombre d'articles"
+
+#: smooth-streaming-video-player/svp-settings.php:92
+msgid "You can put 0 to indicate an illimited count."
+msgstr "En plaçant 0, vous indiquerez une valeur illimitée."
+
+#: smooth-streaming-video-player/svp-settings.php:103
+#, fuzzy
+msgid "Videos sources"
+msgstr "Source des vidéos"
+
+#: smooth-streaming-video-player/svp-settings.php:106
+msgid "No videos source defined. Click on \"Add source\" button below to add a new source."
+msgstr "Pas de source définie. Cliquer sur le bouton \"Add source\" ci-dessous pour ajouter une nouvelle source."
+
+#: smooth-streaming-video-player/svp-settings.php:113
+#: smooth-streaming-video-player/svp-settings.php:120
+msgid "ID"
+msgstr "ID"
+
+#: smooth-streaming-video-player/svp-settings.php:114
+#: smooth-streaming-video-player/svp-settings.php:121
+msgid "Name"
+msgstr "Nom"
+
+#: smooth-streaming-video-player/svp-settings.php:115
+#: smooth-streaming-video-player/svp-settings.php:122
+msgid "Source type"
+msgstr "Type de source"
+
+#: smooth-streaming-video-player/svp-settings.php:136
+#: smooth-streaming-video-player/svp-settings.php:144
+msgid "Edit this source"
+msgstr "Editer cette source"
+
+#: smooth-streaming-video-player/svp-settings.php:137
+msgid "(this source must be scanned)"
+msgstr "(cette source doit être scannée)"
+
+#: smooth-streaming-video-player/svp-settings.php:139
+msgid "This configuration must be completed."
+msgstr "Cette configuration doit être complétée."
+
+#: smooth-streaming-video-player/svp-settings.php:144
+msgid "Edit"
+msgstr "Editer"
+
+#: smooth-streaming-video-player/svp-settings.php:149
+msgid "Scan videos on this source"
+msgstr "Scanner les vidéos de cette source"
+
+#: smooth-streaming-video-player/svp-settings.php:149
+msgid "Scan"
+msgstr "Scanner"
+
+#: smooth-streaming-video-player/svp-settings.php:154
+msgid "Delete this source and all attached videos"
+msgstr "Supprimer cette source et toutes ses vidéos attachées."
+
+#: smooth-streaming-video-player/svp-settings.php:154
+msgid "Delete"
+msgstr "Supprimer"
+
+#: smooth-streaming-video-player/svp-settings.php:174
+#: smooth-streaming-video-player/svp-silverlight.php:393
+msgid "Add source"
+msgstr "Ajouter une source"
+
+#: smooth-streaming-video-player/svp-settings.php:179
+msgid "Saves changes"
+msgstr "Enregistrer les modifications"
+
+#: smooth-streaming-video-player/svp-silverlight.php:163
+msgid "We have problem finding your &laquo;&nbsp;/wp-admin/upgrade.php&nbsp;&raquo;"
+msgstr "Nous avons rencontré un problème en cherchant &laquo;&nbsp;/wp-admin/upgrade.php&nbsp;&raquo;"
+
+#: smooth-streaming-video-player/svp-silverlight.php:356
+#: smooth-streaming-video-player/includes/class-post.php:97
+#: smooth-streaming-video-player/includes/class-post.php:162
+msgid "Post ID is undefined."
+msgstr "L'ID de l'article est indéfini."
+
+#: smooth-streaming-video-player/svp-silverlight.php:375
+#: smooth-streaming-video-player/svp-silverlight.php:376
+msgid "SVP"
+msgstr "SVP"
+
+#: smooth-streaming-video-player/svp-silverlight.php:385
+msgid "SVP Settings"
+msgstr "Paramètres"
+
+#: smooth-streaming-video-player/svp-silverlight.php:392
+msgid "SVP Source"
+msgstr "SVP Source"
+
+#: smooth-streaming-video-player/svp-silverlight.php:399
+msgid "SVP About"
+msgstr "A propos"
+
+#: smooth-streaming-video-player/svp-silverlight.php:406
+msgid "SVP Source Deletion"
+msgstr "Suppression d'une source SVP"
+
+#: smooth-streaming-video-player/svp-silverlight.php:413
+msgid "SVP Source Scanner"
+msgstr "Scanner une source SVP"
+
+#: smooth-streaming-video-player/svp-silverlight.php:517
+msgid "Smooth Streaming Video Player &#8212; Choose your video"
+msgstr "Smooth Streaming Video Player &#8212; Sélectionner votre vidéo"
+
+#: smooth-streaming-video-player/svp-source.php:76
+#, fuzzy
+msgid "Your configuration settings have been correctly updated."
+msgstr "Les paramètres de configuration ont correctement été mis à jour."
+
+#: smooth-streaming-video-player/svp-source.php:83
+msgid "Incorrect values&nbsp;: check your form configuration values."
+msgstr "Valeurs incorrectes&nbsp;: vérifiez vos valeurs de configuration."
+
+#: smooth-streaming-video-player/svp-source.php:94
+msgid "Select source type"
+msgstr "Sélectionner le type de source"
+
+#: smooth-streaming-video-player/svp-source.php:103
+#, php-format
+msgid "Edit source &laquo;&nbsp;%s&nbsp;&raquo; (ID #%d)"
+msgstr "Editer la source &laquo;&nbsp;%s&nbsp;&raquo; (ID #%d)"
+
+#: smooth-streaming-video-player/svp-source.php:109
+#, php-format
+msgid "Edit source &laquo;&nbsp;%s&nbsp;&raquo; type (ID #%d)"
+msgstr "Editer le type de la source &laquo;&nbsp;%s&nbsp;&raquo; (ID #%d)"
+
+#: smooth-streaming-video-player/svp-source.php:114
+msgid "Save"
+msgstr "Enregistrer"
+
+#: smooth-streaming-video-player/svp-source.php:116
+msgid "Valid"
+msgstr "Valider"
+
+#: smooth-streaming-video-player/svp-source.php:149
+msgid "Source type selection"
+msgstr "Sélection du type de source"
+
+#: smooth-streaming-video-player/svp-source.php:153
+msgid "Videos source type"
+msgstr "Type de source de vidéos"
+
+#: smooth-streaming-video-player/includes/class-post.php:194
+#, php-format
+msgid "This post with ID %s does not exist."
+msgstr "L'article avec l'ID %s n'existe pas."
+
+#: smooth-streaming-video-player/includes/class-post.php:226
+#: smooth-streaming-video-player/includes/class-post.php:257
+#, php-format
+msgid "Video source ID is undefined. Please read post data before to call method <em>%s</em>."
+msgstr "L'ID de la source est indéfinie. Veuillez récupérer les données postées avant d'appeler la méthode <em>%s</em>."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:48
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:51
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:50
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:50
+#: smooth-streaming-video-player/includes/class-source-progressive.php:47
+#: smooth-streaming-video-player/includes/class-source-rce.php:46
+msgid "Main configuration"
+msgstr "Configuration principale"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:53
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:56
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:55
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:55
+#: smooth-streaming-video-player/includes/class-source-progressive.php:52
+#: smooth-streaming-video-player/includes/class-source-rce.php:51
+msgid "Source name"
+msgstr "Nom de la source"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:57
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:60
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:59
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:59
+#: smooth-streaming-video-player/includes/class-source-progressive.php:56
+#: smooth-streaming-video-player/includes/class-source-rce.php:55
+msgid "Here, you have to place your source type name."
+msgstr "Ici, vous devez indiquer le nom du type de source."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:62
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:65
+msgid "Blob storage URL"
+msgstr "URL du blob storage"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:66
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:69
+msgid "Example&nbsp;: <code>http://example.blob.core.windows.net/</code> &#8212; don&#8217;t forget the <code>http://</code> prefix."
+msgstr "Exemple : <code>http://example.blob.core.windows.net/</code> &#8212; n&#8217;oubliez pas le <code>http://</code>"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:71
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:74
+msgid "Videos container name"
+msgstr "Nom du conteneur de vidéos"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:75
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:78
+msgid "This is the container name that contains your videos on the Microsoft Azure blob storage."
+msgstr "Il s'agit du nom du répertoire contenant vos vidéos sur le blob storage de Microsoft Azure."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:82
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:104
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:104
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:104
+#: smooth-streaming-video-player/includes/class-source-progressive.php:81
+#: smooth-streaming-video-player/includes/class-source-rce.php:80
+msgid "Videos access configuration"
+msgstr "Configuration de l'accès aux vidéos"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:87
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:109
+msgid "Blob storage login"
+msgstr "Login du blob storage"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:91
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:113
+msgid "This is the login defined when you configured your blob storage."
+msgstr "Il s'agit du login défini lors de la configuration de votre blob storage."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:96
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:118
+msgid "Blob storage key"
+msgstr "Clé du blob storage"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:100
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:122
+msgid "This is the key you obtained when you configured your blob storage."
+msgstr "C'est la clé que vous avez obtenue lors de la configuration de votre blob storage."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:105
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:127
+msgid "CDN activation"
+msgstr "Activation du CDN"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:109
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:87
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:132
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:87
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:87
+msgid "Activate"
+msgstr "Activer"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:110
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:133
+msgid "This option must have been activated in your blob storage."
+msgstr "Cette option doit avoir été activée dans votre blob storage."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:116
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:139
+msgid "CDN URL"
+msgstr "URL du CDN"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:120
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:143
+msgid "This is the CDN URL you obtained when you activated CDN option in your blob storage. Example&nbsp;: <code>http://example.blob.core.windows.net/</code> &#8212; don&#8217;t forget the <code>http://</code> prefix."
+msgstr "Il s'agit de l'URL du CDN que vous avez obtenu lorsque vous avez activé l'option CDN dans votre blob storage. Exemple&nbsp;: <code>http://example.blob.core.windows.net/</code> &#8212; n&#8217;oubliez pas le préfixe <code>http://</code>."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:163
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:186
+#, php-format
+msgid "An error occured getting the videos on your Windows Azure Blob Storage with the message : <em>%s</em>"
+msgstr "Une erreur est survenue en obtenant les vidéos de votre Blob Storage Windows Azure avec le message : <em>%s</em>"
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:304
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:351
+#: smooth-streaming-video-player/includes/class-source-base.php:442
+#: smooth-streaming-video-player/includes/class-source-base.php:478
+#, php-format
+msgid "Source options are undefined. Please read source data before to call method <em>%s</em>."
+msgstr "Les options de la sources sont indéfinies. Veuillez récupérer les données de la source avant d'appeler la méthode <em>%s</em>."
+
+#: smooth-streaming-video-player/includes/class-source-azure-progressive.php:309
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:356
+#: smooth-streaming-video-player/includes/class-source-base.php:447
+#: smooth-streaming-video-player/includes/class-source-base.php:483
+msgid "The URL or the name directory of the source is missing."
+msgstr "L'URL ou le nom du répertoire de la source est manquant."
+
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:83
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:82
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:82
+msgid "iPhone compatibility"
+msgstr "Compatibilité iPhone"
+
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:93
+msgid "Videos container name for iPhone"
+msgstr "Nom du conteneur des vidéos pour l'iPhone"
+
+#: smooth-streaming-video-player/includes/class-source-azure-smooth.php:97
+msgid "This is the container name that contains your videos for iPhone or iPad on the server. This field must be filled if the iPhone compatibility option has been enabled."
+msgstr "Il s'agit du nom du conteneur qui contient vos vidéos pour l'iPhone ou l'iPad sur votre serveur. Ce champ doit être renseigné pour que la compatibilité iPhone soit activée."
+
+#: smooth-streaming-video-player/includes/class-source-base.php:125
+msgid "Invalid video type."
+msgstr "Type de vidéo incorrect."
+
+#: smooth-streaming-video-player/includes/class-source-base.php:135
+msgid "Type of videos on source must be defined in constructor of herited classes."
+msgstr "Le type des vidéos de la source doit être défini dans le constructeur des classes héritées."
+
+#: smooth-streaming-video-player/includes/class-source-base.php:151
+msgid "Please configure your method to return a correct configuration form."
+msgstr "Veuillez configurer votre méthode pour qu'elle retourne un formulaire de configuration correct."
+
+#: smooth-streaming-video-player/includes/class-source-base.php:332
+msgid "Filenames parameter is not an array."
+msgstr "Le paramètre des noms de fichiers n'est pas un tableau."
+
+#: smooth-streaming-video-player/includes/class-source-base.php:360
+#, php-format
+msgid "An error occured deleting the video with ID %d from the source with ID %d."
+msgstr "Une erreur est survenue lors de la suppression de la vidéo avec l'ID %d de la source identifiée %d."
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:64
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:64
+#: smooth-streaming-video-player/includes/class-source-progressive.php:61
+#: smooth-streaming-video-player/includes/class-source-rce.php:60
+#, fuzzy
+msgid "Videos server web URL"
+msgstr "Adresse web du serveur de vidéos"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:68
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:68
+#: smooth-streaming-video-player/includes/class-source-progressive.php:65
+#: smooth-streaming-video-player/includes/class-source-rce.php:64
+#, fuzzy
+msgid "Example&nbsp;: <code>http://wordpress.org/</code> &#8212; don&#8217;t forget the <code>http://</code> prefix."
+msgstr "Exemple : <code>http://wordpress.org/</code> &#8212; n&#8217;oubliez pas le <code>http://</code>"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:73
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:73
+#: smooth-streaming-video-player/includes/class-source-progressive.php:70
+#: smooth-streaming-video-player/includes/class-source-rce.php:69
+#, fuzzy
+msgid "Videos directory name"
+msgstr "Nom du répertoire des vidéos"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:77
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:77
+#: smooth-streaming-video-player/includes/class-source-progressive.php:74
+#: smooth-streaming-video-player/includes/class-source-rce.php:73
+#, fuzzy
+msgid "This is the directory name that contains your videos on the server."
+msgstr "Il s'agit du nom du répertoire contenant vos vidéos sur le serveur."
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:93
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:93
+msgid "Videos directory name for iPhone"
+msgstr "Nom du répertoire des vidéos pour l'iPhone"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:97
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:97
+msgid "This is the directory name that contains your videos for iPhone or iPad on the server. This field must be filled if the iPhone compatibility option has been enabled."
+msgstr "Il s'agit du nom du répertoire qui contient les vidéos pour iPhone et iPad sur le serveur. Ce champ doit être renseigné pour que la compatibilité iPhone soit activée."
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:109
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:109
+#: smooth-streaming-video-player/includes/class-source-progressive.php:86
+#: smooth-streaming-video-player/includes/class-source-rce.php:85
+msgid "Videos FTP host"
+msgstr "Hôte FTP des vidéos"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:113
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:113
+#: smooth-streaming-video-player/includes/class-source-progressive.php:90
+#: smooth-streaming-video-player/includes/class-source-rce.php:89
+msgid "The FTP host can be an IP or domain name &#8212; don&#8217;t add <code>ftp://</code> prefix."
+msgstr "L'hôte FTP peut être une adresse IP ou un nom de domaine &#8212; n&#8217;ajoutez pas le préfixe <code>ftp://</code>."
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:118
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:118
+#: smooth-streaming-video-player/includes/class-source-progressive.php:95
+#: smooth-streaming-video-player/includes/class-source-rce.php:94
+msgid "Videos FTP user"
+msgstr "Nom d'utilisateur FTP des vidéos"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:122
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:122
+#: smooth-streaming-video-player/includes/class-source-progressive.php:99
+#: smooth-streaming-video-player/includes/class-source-rce.php:98
+msgid "This is the FTP user to connect to FTP server."
+msgstr "Il s'agit du nom d'utilisateur pour se connecter au serveur FTP"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:127
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:127
+#: smooth-streaming-video-player/includes/class-source-progressive.php:104
+#: smooth-streaming-video-player/includes/class-source-rce.php:103
+msgid "Videos FTP password"
+msgstr "Mot de passe FTP des vidéos"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:131
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:131
+#: smooth-streaming-video-player/includes/class-source-progressive.php:108
+#: smooth-streaming-video-player/includes/class-source-rce.php:107
+msgid "This is the FTP password to connect to FTP server."
+msgstr "Il s'agit du mot de passe FTP pour se connecter au serveur FTP."
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:136
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:136
+#: smooth-streaming-video-player/includes/class-source-progressive.php:113
+msgid "Path to web root"
+msgstr "Chemin vers la racine du web"
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:140
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:140
+#: smooth-streaming-video-player/includes/class-source-progressive.php:117
+msgid "If your FTP access not goes directly to web root, you must specify to path to it. Example : <code>webuser/www</code> or <code>www</code> &#8212; don&#8217;t add <code>/</code> as prefix or as suffix."
+msgstr "Si votre serveur FTP ne pointe pas directement vers la racine du web, vous devez indiquer le chemin vers celle-ci. Exemple : <code>webuser/www</code> ou <code>www</code> &#8212; n&#8217;t ajoutez pas <code>/</code> comme préfixe ou suffixe."
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:173
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:173
+#: smooth-streaming-video-player/includes/class-source-progressive.php:150
+#: smooth-streaming-video-player/includes/class-source-rce.php:140
+msgid "Error connecting to source. Check your source videos access settings."
+msgstr "Erreur en se connectant à la source. Vérifiez vos paramètres d'accès à la source."
+
+#: smooth-streaming-video-player/includes/class-source-iis-live.php:190
+#: smooth-streaming-video-player/includes/class-source-iis-smooth.php:190
+#: smooth-streaming-video-player/includes/class-source-progressive.php:167
+#: smooth-streaming-video-player/includes/class-source-rce.php:149
+msgid "Error listing your videos source. Try later or check your videos directory name setting."
+msgstr "Erreur en listant les vidéos de la source. Veuillez essayer plus tard ou vérifiez le nom du répertoire des vidéos."
+
+#: smooth-streaming-video-player/includes/class-source.php:38
+#, php-format
+msgid "The filename &laquo;&nbsp;%s&nbsp;&raquo; does not exist."
+msgstr "Le nom de fichier &laquo;&nbsp;%s&nbsp;&raquo; n'existe pas."
+
+#: smooth-streaming-video-player/includes/class-source.php:45
+#, php-format
+msgid "The class &laquo;&nbsp;%s&nbsp;&raquo; does not exist."
+msgstr "La classe &laquo;&nbsp;%s&nbsp;&raquo; n'existe pas."
+
+#: smooth-streaming-video-player/includes/class-video-base.php:57
+msgid "Video type is invalid."
+msgstr "Le type de vidéo est incorrect."
+
+#: smooth-streaming-video-player/includes/class-video-base.php:79
+msgid "The list of posts must be an array."
+msgstr "La liste des articles doit être un tableau."
+
+#: smooth-streaming-video-player/includes/class-video-base.php:95
+msgid "Value for extensions must be an array."
+msgstr "La valeur pour les extensions doit être un tableau."
+
+#: smooth-streaming-video-player/includes/class-video-base.php:104
+msgid "Extension is invalid or unauthorized."
+msgstr "L'extension est incorrecte ou non autorisée."
+
+#: smooth-streaming-video-player/includes/class-video.php:56
+#, php-format
+msgid "Extension &laquo;&nbsp;%s&nbsp;&raquo; is unauthorized."
+msgstr "L'extension &laquo;&nbsp;%s&nbsp;&raquo; n'est pas autorisée."
+
+#: smooth-streaming-video-player/includes/class-videos.php:95
+msgid "No extensions defined."
+msgstr "Pas d'extensions définie."
+
+#~ msgid "Smooth Streaming Movie"
+#~ msgstr "Vidéo Smooth Streaming"
+
+#~ msgid "Include a smooth streaming movie in your post content"
+#~ msgstr "Ajouter une vidéo smooth streaming dans le contenu de l'article"
+
+#~ msgid "Loading..."
+#~ msgstr "Chargement..."
+
+#~ msgid "After selection of movie, you could specifiy some options."
+#~ msgstr "Après la sélection de la vidéo, vous pourrez spécifier des options."
+
+#~ msgid ""
+#~ "None smooth movie is actually associated with this post. Click on left "
+#~ "list to choose one."
+#~ msgstr ""
+#~ "Aucune vidéo smooth streaming n'est actuellement associé à l'article. "
+#~ "Cliquez dans la liste de gauche pour en choisir une."
+
+#~ msgid "You have associated with this post the named smooth movie : [movie]"
+#~ msgstr "Vous avez associé à l'article la vidéo smooth nommée : [movie]"
+
+#~ msgid "You must publish the post before to choose the movie to add."
+#~ msgstr "Vous devez publier l'article avant de choisir la vidéo à ajouter."
+
+#~ msgid ""
+#~ "None smooth streaming movie is actually associated with this post. Click "
+#~ "on left list to choose one."
+#~ msgstr ""
+#~ "Aucune vidéo smooth streaming n'est actuellement associé à l'article. "
+#~ "Cliquez dans la liste de gauche pour en choisir une."
+
+#~ msgid ""
+#~ "You have associated with this post the named smooth streaming "
+#~ "movie&nbsp;: &laquo;&nbsp;%s&nbsp;&raquo;"
+#~ msgstr ""
+#~ "Vous avez associé à l'article la vidéo smooth nommée&nbsp;: &laquo;&nbsp;%"
+#~ "s&nbsp;&raquo;"
+
+#~ msgid "Player dimensions"
+#~ msgstr "Dimensions du lecteur"
+
+#~ msgid "Width in pixels"
+#~ msgstr "Largeur en pixels"
+
+#~ msgid "Height in pixels"
+#~ msgstr "Hauteur en pixels"
+
+#~ msgid ""
+#~ "You have associated with this post the named smooth streaming "
+#~ "movie&nbsp;: [movie]"
+#~ msgstr "Vous avez associé à l'article la vidéo smooth nommée : [movie]"
+
+#~ msgid "You must publish the post before writing movie datas in database."
+#~ msgstr ""
+#~ "Vous devez publier l'article avant l'enregistrement des données de la "
+#~ "vidéo en base de données."
+
+#~ msgid ""
+#~ "An error occured writing movie datas in database or there is not datas to "
+#~ "update."
+#~ msgstr ""
+#~ "Une erreur a eu lieu lors de l'écriture des données de la vidéo en base "
+#~ "de données ou il n'y avait pas de données à mettre à jour."
+
+#~ msgid "Movie options has been correctly updated."
+#~ msgstr "Les options de la vidéo ont correctement été mises à jour."
+
+#~ msgid "None movie found on the server"
+#~ msgstr "Aucune vidéo trouvée sur le serveur"
+
+#~ msgid "(attached to %u post(s))"
+#~ msgstr "(associée à %u article(s))"
+
+#~ msgid "An error occured with the message: "
+#~ msgstr "Une erreur est survenue avec le message : "
+
+#~ msgid ""
+#~ "Incorrect data source. Please check your URL and directory data source in "
+#~ "the plugin settings."
+#~ msgstr ""
+#~ "Source de données incorrecte. Veuillez vérifier l'URL et le répertoire de "
+#~ "source de données dans les paramètres du plugin."
+
+#~ msgid "Player background"
+#~ msgstr "Arrière-plan du lecteur"
+
+#~ msgid "Player options"
+#~ msgstr "Options du lecteur"
+
+#~ msgid "Show comments"
+#~ msgstr "Afficher les commentaires"
+
+#~ msgid "Chapters navigation"
+#~ msgstr "Navigation entre chapitres"
+
+#~ msgid "Autoplay"
+#~ msgstr "Lecture automatique"
+
+#~ msgid "A friend wants to share a movie with you"
+#~ msgstr "Un(e) ami(e) souhaite partager une vidéo avec vous"
+
+#~ msgid "Post URL not found"
+#~ msgstr "URL de l'article non trouvée"
+
+#~ msgid "Error sending email"
+#~ msgstr "Erreur lors de l'envoi de l'email"
+
+#~ msgid "Player background color"
+#~ msgstr "Arrière-plan coloré du lecteur"
+
+#~ msgid "Watermark image"
+#~ msgstr "Image Watermark"
+
+#~ msgid "Watermark image position"
+#~ msgstr "Position de l'image Watermark"
+
+#~ msgid "Watermark image opacity"
+#~ msgstr "Opacité de l'image Watermark"
+
+#~ msgid "Others"
+#~ msgstr "Autres"
+
+#~ msgid "Show home page playlist"
+#~ msgstr "Afficher la playlist sur la page d'accueil"
+
+#, fuzzy
+#~ msgid "SVP Silverlight Settings"
+#~ msgstr "Paramètres SVP"
+
+#, fuzzy
+#~ msgid "SVP Silverlight Statistics"
+#~ msgstr "Statistiques SVP"
+
+#~ msgid "Statistics"
+#~ msgstr "Statistiques"
+
+#, fuzzy
+#~ msgid "SVP Silverlight About"
+#~ msgstr "A propos de SVP"
+
+#~ msgid "You are now installing Silverlight, refresh your browser when done."
+#~ msgstr ""
+#~ "Vous êtes en train d'installer Silverlight, actualisez votre navigateur "
+#~ "lorsque vous avez terminé."
+
+#~ msgid ""
+#~ "This application needs you to upgrade the Silverlight plugin that runs "
+#~ "it. An older version is installed. Click here to upgrade it."
+#~ msgstr ""
+#~ "Cette application a besoin de mettre à jour le plugin Silverlight. Une "
+#~ "ancienne version est installée. Cliquez ici pour mettre à jour."
+
+#~ msgid ""
+#~ "You are now upgrading Silverlight. When this is done, please restart your "
+#~ "browser."
+#~ msgstr ""
+#~ "Le plugin Silverlight est en train d'être mis à jour. Lorsque vous avez "
+#~ "terminé, merci d'actualiser votre navigateur."
+
+#~ msgid "Please restart your browser."
+#~ msgstr "Merci de redémarrer votre navigateur."
+
+#~ msgid "This browser doesn't support Silverlight, sorry!"
+#~ msgstr "Ce navigateur ne supporte pas le Silverlight, désolé!"
+
+#~ msgid "posted by %s on %s"
+#~ msgstr "publié par %s le %s"
+
+#~ msgid ""
+#~ "This application needs you to use the Silverlight plugin. Click here to "
+#~ "install it."
+#~ msgstr ""
+#~ "Cette application a besoin d'utiliser le plugin Silverlight. Cliquez ici "
+#~ "pour l'installer."
+
+#~ msgid "Search results for &#8220;%s&#8221;"
+#~ msgstr "Résultats de recherche pour &#8220;%s&#8221;"
+
+#~ msgid "No statistics data found."
+#~ msgstr "Aucune données de statistiques trouvée."
+
+#~ msgid "All"
+#~ msgstr "Tout"
+
+#~ msgid "Started > 100"
+#~ msgstr "Démarrage > 100"
+
+#~ msgid "Started > 20"
+#~ msgstr "Démarrage > 20"
+
+#~ msgid "Finished > 100"
+#~ msgstr "Fin > 100"
+
+#~ msgid "Finished > 20"
+#~ msgstr "Fin > 20"
+
+#~ msgid "Search Movies:"
+#~ msgstr "Rechercher des vidéos :"
+
+#~ msgid "Search Movies"
+#~ msgstr "Rechercher des vidéos"
+
+#~ msgid "Filename"
+#~ msgstr "Nom du fichier"
+
+#~ msgid "Started"
+#~ msgstr "Démarrage"
+
+#~ msgid "Finished"
+#~ msgstr "Fin"
+
+#~ msgid "Order"
+#~ msgstr "Classement"
+
+#~ msgid "No matching stats were found !"
+#~ msgstr "Pas de statistiques correspondantes trouvées !"
+
+#~ msgid "Displaying %s&#8211;%s of %s"
+#~ msgstr "Affichage de %s&#8211;%s sur %s"
+
+#~ msgid "Top right corner"
+#~ msgstr "Coin supérieur droit"
+
+#~ msgid "Bottom right corner"
+#~ msgstr "Coin inférieur droit"
+
+#~ msgid "Bottom left corner"
+#~ msgstr "Con inférieur gauche"
+
+#~ msgid "Top left corner"
+#~ msgstr "Coin supérieur gauche"
