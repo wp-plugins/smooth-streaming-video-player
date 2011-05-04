@@ -2,8 +2,8 @@
 /*
 Plugin Name: Smooth Video Player
 Plugin URI: http://www.adenova.fr/smooth-video-player-plugin-wordpress/
-Description: A Smooth Streaming Video Player. Thanks to this plugin, you can add several sources of videos of different servers and associate them to your blog posts.
-Version: 1.5.0
+Description: A Smooth Streaming Video Player. With this plugin, you can add several sources of videos of different servers and associate them to your blog posts.
+Version: 1.5.1
 Author: Agence Adenova
 Author URI: http://www.adenova.fr
 */
@@ -14,7 +14,7 @@ if ( ! class_exists( 'SVP_Smooth_Video_Player' ) )
 	if ( ! defined( 'SVP_DB_VERSION' ) )
 		define( 'SVP_DB_VERSION', '1.1.0' );
 	if ( ! defined( 'SVP_PLUGIN_VERSION' ) )
-		define( 'SVP_PLUGIN_VERSION', '1.5.0' );
+		define( 'SVP_PLUGIN_VERSION', '1.5.1' );
 	if ( ! defined( 'SVP_USER_AGENT_IPHONE' ) )
 		define( 'SVP_USER_AGENT_IPHONE', 'IPHONE' );
 	if ( ! defined( 'SVP_USER_AGENT_IPAD' ) )
