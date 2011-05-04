@@ -37,6 +37,7 @@ if ( ! class_exists ( 'SVP_Source_IIS_Live' ) )
 			$options['svp_source_host'] = '';
 			$options['svp_source_user'] = '';
 			$options['svp_source_pass'] = '';
+			$options['svp_source_webroot'] = '';
 			$id = $this->get_ID();
 			if ( ! empty( $id ) )
 			{
@@ -130,6 +131,15 @@ if ( ! class_exists ( 'SVP_Source_IIS_Live' ) )
 									<br />' . __( 'This is the FTP password to connect to FTP server.', 'svp-translate' ) . '
 								</td>
 							</tr>
+							<tr valign="top">
+								<th scope="row">
+									<label for="svp_source_webroot">' . __( 'Path to web root', 'svp-translate' ) . '</label>
+								</th>
+								<td>
+									<input name="svp_source_webroot" type="text" id="svp_source_webroot" value="' . $options['svp_source_webroot'] . '" class="regular-text code" />
+									<br />' . __( 'If your FTP access not goes directly to web root, you must specify to path to it. Example : <code>webuser/www</code> or <code>www</code> &#8212; don&#8217;t add <code>/</code> as prefix or as suffix.', 'svp-translate' ) . '
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>';
@@ -165,7 +175,15 @@ if ( ! class_exists ( 'SVP_Source_IIS_Live' ) )
 					}
 					else
 					{
-						( isset( $options['svp_source_dirname'] ) && ! empty( $options['svp_source_dirname'] ) ) ? $directory = $options['svp_source_dirname'] : $directory = '.';
+						$directory = '.';
+						( isset( $options['svp_source_webroot'] ) && ! empty( $options['svp_source_webroot'] ) ) ? $directory = $options['svp_source_webroot'] : $directory = '.';
+						if ( isset( $options['svp_source_dirname'] ) && ! empty( $options['svp_source_dirname'] ) )
+						{
+							if ( $directory == '.')
+								$directory = $options['svp_source_dirname'];
+							else
+								$directory .= '/' . $options['svp_source_dirname'];
+						}
 						$result = ftp_nlist( $cid, $directory );
 						if ( $result === false )
 						{
@@ -182,7 +200,9 @@ if ( ! class_exists ( 'SVP_Source_IIS_Live' ) )
 			
 			// Filter by extension
 			$videos = new SVP_Videos();
-			$result = $videos->filter_by_extensions( $result, $svp_video_live->get_extensions() );
+			if ( $directory != '.' )
+				$path = $directory . '/';
+			$result = $videos->filter_by_extensions( $result, $svp_video_live->get_extensions(), $path );
 			
 			// Do the synchronization
 			$synchro = $this->synchro( $id, $result );
@@ -232,6 +252,8 @@ if ( ! class_exists ( 'SVP_Source_IIS_Live' ) )
 							if ( empty( $data[$key] ) )
 								return false;
 							break;
+						case 'svp_source_webroot':
+							break;
 					}
 				}
 			}
@@ -247,7 +269,8 @@ if ( ! class_exists ( 'SVP_Source_IIS_Live' ) )
 				'svp_source_iphone_dirname',
 				'svp_source_host',
 				'svp_source_user',
-				'svp_source_pass' );
+				'svp_source_pass',
+				'svp_source_webroot' );
 		}
 		
 		function make_video_url( $filename = '' )

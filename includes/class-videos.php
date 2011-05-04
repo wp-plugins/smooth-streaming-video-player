@@ -40,23 +40,6 @@ if ( ! class_exists( 'SVP_Videos' ) )
 		}
 		
 		/**
-		 * Retourne le nombre d'articles associés à une même vidéo.
-		 * 
-		 * @param $filename Nom du fichier ism correspondant à la vidéo
-		 * @return int Nombre d'articles associés à la vidéo
-		 */
-		function get_num_posts_by_video( $filename )
-		{
-			global $wpdb;
-			$query = 'SELECT COUNT(filename) size FROM ' . $wpdb->prefix . 'svp_post_videos';
-			$query .= ' WHERE filename = %s';
-			$posts = $wpdb->get_row( $wpdb->prepare( $query, (string) $filename ) );
-			if ( (int) $posts->size > 0 )
-				return (int) $posts->size;
-			return 0;
-		}
-		
-		/**
 		 * Retourne la liste des vidéos.
 		 *
 		 * @return array Tableau d'objets
@@ -101,9 +84,11 @@ if ( ! class_exists( 'SVP_Videos' ) )
 		 * 
 		 * @since 1.5.0
 		 * @param array Videos list
+		 * @param array Authorized extensions
+		 * @param string Path before filename to delete
 		 * @return array Filtered videos list
 		 */
-		function filter_by_extensions( $videos = array(), $extensions = array() )
+		function filter_by_extensions( $videos = array(), $extensions = array(), $path = '' )
 		{
 			if ( empty( $extensions ) )
 			{
@@ -115,6 +100,8 @@ if ( ! class_exists( 'SVP_Videos' ) )
 			$filtered_videos = array();
 			foreach ( $videos as $video )
 			{
+				if ( ! empty( $path ) )
+					$video = str_replace( $path, '', $video );
 				$video = $svp_utils->delete_endurl_slash( $video );
 				$extension = substr( $video, strrpos( $video, '.' ) + 1 );
 				if ( $extension !== false && in_array( $extension, $extensions ) )

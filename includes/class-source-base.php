@@ -299,19 +299,6 @@ if ( ! class_exists ( 'SVP_Source_Base' ) )
 		}
 		
 		/**
-		 * Default connect method.
-		 * To test if connection to source is possible.
-		 * 
-		 * @since 1.5.0
-		 * @param int Source ident
-		 * @return bool
-		 */
-		function connect( $id = null )
-		{
-			return false;
-		}
-		
-		/**
 		 * Default scan method.
 		 * To list the videos files from the source.
 		 *
@@ -471,7 +458,7 @@ if ( ! class_exists ( 'SVP_Source_Base' ) )
 		 * @param string $filename Video filename
 		 * @return string Thumbnail URL
 		 */
-		function make_thumbnail_url( $filename )
+		function make_thumbnail_url( $filename = '' )
 		{
 			if ( empty( $filename ) )
 			{

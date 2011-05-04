@@ -2,11 +2,11 @@
 Contributors: adenova
 Tags: video, streaming, silverlight
 Requires at least: 2.9
-Tested up to: 3.0.4
-Stable tag: 1.5.0
+Tested up to: 3.1.2
+Stable tag: 1.5.1
 License: GPLv2
 
-This plugin allow you to play some Smooth Streaming (in Live mode or not) and progressive download videos linked to your posts blog.
+This plugin allow you to play some adaptive streaming (with Smooth Streaming in live mode or not) and progressive download videos linked to your posts blog.
 
 == Description ==
 
@@ -65,6 +65,10 @@ Examples of template tag call :
 
 == Changelog ==
 
+= 1.5.1 =
+* French translation ended.
+* Add webroot management in the source configuration form.
+
 = 1.5.0 =
 * Add a multiple sources of videos management.
 * Add pages to add, edit and delete a source of videos.
@@ -93,6 +97,9 @@ Examples of template tag call :
 * This is the initial version of our plugin.
 
 == Upgrade Notice ==
+
+= 1.5.1 =
+* Upgrade to this version to get webroot management in the source configuration form (stable version).
 
 = 1.4.2 =
 * You have to upgrade to this version if you want to show the silverlight player in the posts page list (stable version).
